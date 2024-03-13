@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">HabitsTracker</string>
+    <string name="negative">Плохой</string>
+    <string name="positive">Хороший</string>
+    <string name="type">Тип привычки:</string>
+    <string name="choose_color">Выберите цвет:</string>
+    <string name="priority">Приоритет</string>
+    <string name="info">Информация</string>
+    <string name="choose_period">Укажите периодичность:</string>
+    <string name="choose_count">Укажите количество выполнений:</string>
+    <string name="priority_head">Приоритет:</string>
+    <string name="new_habit">Новая привычка</string>
+    <string name="add">Добавить</string>
+    <string name="example">aaaaaaaaaaaaaaaaaaaaaaa</string>
+    <string name="name">Название:</string>
+    <string name="cancel">Отменить</string>
+    <string name="add_text">Add</string>
+    <string name="description">Описание:</string>
+    <string-array name="habit_priorities">
+        <item>Большой</item>
+        <item>Средний</item>
+        <item>Маленький</item>
+    </string-array>
+</resources>

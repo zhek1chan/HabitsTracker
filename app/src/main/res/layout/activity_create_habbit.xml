@@ -1,0 +1,218 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="25dp">
+
+
+    <TextView
+        android:layout_marginTop="40dp"
+        android:id="@+id/naming"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name"
+        android:textSize="@dimen/small_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextName"
+        android:textSize="@dimen/small_text"
+        app:layout_constraintStart_toEndOf="@id/naming"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/naming"
+        app:layout_constraintBottom_toBottomOf="@id/naming"
+        android:hint="@string/name"
+        android:maxLines="1"/>
+
+    <TextView
+        android:layout_marginTop="25dp"
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/description"
+        android:textSize="@dimen/small_text"
+        app:layout_constraintStart_toStartOf="@id/naming"
+        app:layout_constraintTop_toBottomOf="@id/naming"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editDescription"
+        android:textSize="@dimen/small_text"
+        app:layout_constraintStart_toEndOf="@id/description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/description"
+        app:layout_constraintBottom_toBottomOf="@id/description"
+        android:hint="@string/description"
+        android:maxLines="1"/>
+    <TextView
+        android:layout_marginTop="25dp"
+        android:id="@+id/fragmentAddPriorityLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/priority_head"
+        android:textSize="@dimen/small_text"
+        app:layout_constraintStart_toStartOf="@id/description"
+        app:layout_constraintTop_toBottomOf="@id/description" />
+
+    <Spinner
+        android:id="@+id/priority_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:entries="@array/habit_priorities"
+        app:layout_constraintBottom_toBottomOf="@+id/fragmentAddPriorityLabel"
+        app:layout_constraintStart_toEndOf="@+id/fragmentAddPriorityLabel"
+        app:layout_constraintTop_toTopOf="@+id/fragmentAddPriorityLabel" />
+
+    <TextView
+        android:id="@+id/type"
+        android:layout_marginTop="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/type"
+        android:textSize="@dimen/small_text"
+        app:layout_constraintTop_toBottomOf="@+id/priority_spinner"
+        tools:ignore="MissingConstraints" />
+
+    <RadioGroup
+        android:id="@+id/choose_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/type"
+        app:layout_constraintStart_toEndOf="@+id/type"
+        app:layout_constraintTop_toTopOf="@+id/type">
+
+        <RadioButton
+            android:id="@+id/button_positive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="@string/positive" />
+
+        <RadioButton
+            android:id="@+id/button_negative"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="@string/negative" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/fragmentAddColorLabel"
+        android:layout_marginTop="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/choose_color"
+        android:textSize="@dimen/small_text"
+        app:layout_constraintTop_toBottomOf="@+id/type"
+        tools:ignore="MissingConstraints" />
+
+
+    <Button
+        android:id="@+id/color_picker_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:padding="10dp"
+        android:text="Цвет"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        android:layout_marginStart="20dp"
+        app:layout_constraintBottom_toBottomOf="@id/fragmentAddColorLabel"
+        app:layout_constraintStart_toEndOf="@+id/fragmentAddColorLabel"
+        app:layout_constraintTop_toTopOf="@id/fragmentAddColorLabel" />
+
+    <TextView
+        android:id="@+id/fragmentAddPeriodLabel"
+        android:layout_marginTop="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/choose_period"
+        android:textSize="@dimen/small_text"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentAddColorLabel"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/fragmentAddPeriodContainer"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="20dp"
+        app:cardElevation="3dp"
+        app:layout_constraintBottom_toBottomOf="@id/fragmentAddPeriodLabel"
+        app:layout_constraintStart_toEndOf="@id/fragmentAddPeriodLabel"
+        app:layout_constraintTop_toTopOf="@id/fragmentAddPeriodLabel">
+
+        <EditText
+            android:id="@+id/addPeriod"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:background="@color/white"
+            android:inputType="number"
+            android:textAlignment="center" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/fragmentAddCountLabel"
+        android:layout_marginTop="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="22dp"
+        android:text="@string/choose_count"
+        android:textSize="@dimen/small_text"
+        app:layout_constraintTop_toBottomOf="@id/fragmentAddPeriodContainer"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/fragmentAddCountContainer"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="20dp"
+        app:cardElevation="3dp"
+        app:layout_constraintBottom_toBottomOf="@id/fragmentAddCountLabel"
+        app:layout_constraintStart_toEndOf="@id/fragmentAddCountLabel"
+        app:layout_constraintTop_toTopOf="@id/fragmentAddCountLabel">
+
+        <EditText
+            android:id="@+id/addCount"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:background="@color/white"
+            android:inputType="number"
+            android:textAlignment="center" />
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="150dp"
+        android:backgroundTint="@color/yp_blue"
+        android:text="@string/add"
+        android:textSize="@dimen/small_text"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <Button
+        android:id="@+id/dontSaveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="150dp"
+        android:backgroundTint="@color/yp_blue"
+        android:text="@string/cancel"
+        android:textSize="@dimen/small_text"
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toBottomOf="@id/saveButton"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
