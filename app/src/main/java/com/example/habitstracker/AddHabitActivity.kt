@@ -1,6 +1,8 @@
 package com.example.habitstracker
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -30,10 +32,13 @@ class AddHabitActivity(private val habit: Habit? = null) : AppCompatActivity() {
     private var frequency: Int? = habit?.frequency
     private var count: Int? = habit?.count
     private lateinit var colorPickerDialog: AlertDialog
+    private lateinit var sharedPref: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateHabbitBinding.inflate(layoutInflater)
+        sharedPref = this.getSharedPreferences(
+            getString(R.string.preference_file_key), Context.MODE_PRIVATE)
         setContentView(binding.root)
         val prioritySpinner = binding.prioritySpinner
         setTextInputListeners()
@@ -179,7 +184,12 @@ class AddHabitActivity(private val habit: Habit? = null) : AppCompatActivity() {
     }
 
     private fun addHabit(newHabit: Habit) {
-
+        val s = "${newHabit.title},${newHabit.description},${newHabit.type},${newHabit.priority},${newHabit.title},${newHabit.color},${newHabit.title},${newHabit.frequency},${newHabit.count}"
+        val sharedPref = this.getPreferences(Context.MODE_PRIVATE) ?: return
+        with (sharedPref.edit()) {
+            putString(getString(R.string.preference_file_key), s)
+            apply()
+        }
     }
 
     private fun setHabitType() {

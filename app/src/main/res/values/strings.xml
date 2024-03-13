@@ -16,6 +16,7 @@
     <string name="cancel">Отменить</string>
     <string name="add_text">Add</string>
     <string name="description">Описание:</string>
+    <string name="preference_file_key">key</string>
     <string-array name="habit_priorities">
         <item>Большой</item>
         <item>Средний</item>

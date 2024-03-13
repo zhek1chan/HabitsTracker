@@ -1,6 +1,7 @@
 package com.example.habitstracker
 
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,19 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        val habitString = this.getSharedPreferences(
+            getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        var habit: List<String> = emptyList()
+        var s = ""
+        habitString.toString().forEach {
+            if (it!=','){
+                s+=it
+            } else {
+                habit.plus(s)
+                s=""
+            }
+        }
+        //работа с листом
         setContentView(binding.root)
         val fab: View = findViewById(R.id.fab)
         fab.setOnClickListener { view ->
