@@ -1,5 +1,6 @@
 package com.example.habitstracker.root
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.habitstracker.fragments.ui.HabitsFragment
 import com.example.habitstracker.fragments.ui.InfoFragment
@@ -44,20 +46,16 @@ class RootActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (savedInstanceState == null) {
             navController.navigate(R.id.habitsFragment)
         }
-
-
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.main -> supportFragmentManager.beginTransaction()
-                .replace(R.id.FragmentContainerView, HabitsFragment()).commit()
 
-            R.id.infoFragment -> {
-                Log.d("Info", "tap tap")
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.FragmentContainerView, InfoFragment()).commit()
-            }
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        val nav = supportFragmentManager.findFragmentById(R.id.FragmentContainerView) as NavHostFragment
+        val navController = nav.navController
+        when (item.itemId) {
+            R.id.main -> navController.navigate(R.id.habitsFragment)
+
+            R.id.infoFragment -> navController.navigate(R.id.infoFragment)
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
