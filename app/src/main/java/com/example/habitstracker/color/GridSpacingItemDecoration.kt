@@ -1,4 +1,4 @@
-package com.example.habitstracker
+package com.example.habitstracker.color
 
 import android.graphics.Rect
 import android.view.View

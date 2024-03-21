@@ -1,29 +1,29 @@
-package com.example.habitstracker
+package com.example.habitstracker.fragments.ui
 
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
-import android.content.res.ColorStateList
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.graphics.toColor
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.habitstracker.databinding.ActivityCreateHabbitBinding
+import com.example.habitstracker.Habit
+import com.example.habitstracker.color.ColorAdapter
+import com.example.habitstracker.color.GridSpacingItemDecoration
+import com.example.habitstracker.databinding.FragmentAddBinding
+import com.example.habitstracker.db.AppDataBase
+import com.example.habitstracker.db.HabitConvertor
 
-class AddHabitActivity(private val habit: Habit? = null) : AppCompatActivity() {
-    private lateinit var binding: ActivityCreateHabbitBinding
+class AddFragment(private var habit: Habit? = null) : Fragment() {
+    private lateinit var binding: FragmentAddBinding
     private var selectedColor: Int? = habit?.color
     private var title: String? = habit?.title
     private var description: String? = habit?.description
@@ -32,14 +32,22 @@ class AddHabitActivity(private val habit: Habit? = null) : AppCompatActivity() {
     private var frequency: Int? = habit?.frequency
     private var count: Int? = habit?.count
     private lateinit var colorPickerDialog: AlertDialog
-    private lateinit var sharedPref: SharedPreferences
+    private lateinit var stringHabit: String
+    private val db = AppDataBase
+    private val convertor = HabitConvertor()
+    private var newHabit = Habit(0, "", "", 0, 0, 0, 0, 0)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityCreateHabbitBinding.inflate(layoutInflater)
-        sharedPref = this.getSharedPreferences(
-            getString(R.string.preference_file_key), Context.MODE_PRIVATE)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentAddBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val prioritySpinner = binding.prioritySpinner
         setTextInputListeners()
         val arrayAdapter = prioritySpinner.adapter as ArrayAdapter<String>
@@ -59,6 +67,11 @@ class AddHabitActivity(private val habit: Habit? = null) : AppCompatActivity() {
 
         binding.editTextName.doOnTextChanged { text, _, _, _ ->
             title = text.toString()
+        }
+
+        binding.editDescription.doOnTextChanged { text, _, _, _ ->
+            description = text.toString()
+            Log.d("Description", "$text")
         }
 
         binding.addPeriod.doOnTextChanged { text, _, _, _ ->
@@ -99,7 +112,7 @@ class AddHabitActivity(private val habit: Habit? = null) : AppCompatActivity() {
             val padding = dpToPx(15) // Convert 15 dp to pixels
             val spacing = dpToPx(15) // Set the spacing between items in dp
 
-            val recyclerView = RecyclerView(this).apply {
+            val recyclerView = RecyclerView(requireContext()).apply {
                 layoutParams = ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT
@@ -115,7 +128,7 @@ class AddHabitActivity(private val habit: Habit? = null) : AppCompatActivity() {
                 addItemDecoration(GridSpacingItemDecoration(numColumns, spacing, true))
             }
 
-            colorPickerDialog = AlertDialog.Builder(this)
+            colorPickerDialog = AlertDialog.Builder(requireContext())
                 .setTitle("Выберите цвет")
                 .setView(recyclerView)
                 .setNegativeButton("Отмена") { dialog, _ ->
@@ -126,26 +139,21 @@ class AddHabitActivity(private val habit: Habit? = null) : AppCompatActivity() {
         }
     }
 
-    private fun setColor(circle: ImageView) {
-        circle.backgroundTintList = ColorStateList.valueOf(selectedColor!!)
-    }
-
     private fun saveButton() {
         val okBtn = binding.saveButton
         okBtn.setOnClickListener {
             setHabit()
-            val intent = Intent(this, AddHabitActivity::class.java)
-            Log.d("AddHabitActivity", "Navigate to the MainActivity by pButton")
-            startActivity(intent)
+            db(requireContext()).habitDao().insert(convertor.map(newHabit))
+            Log.d("Inserted", "in db")
+            val navController = findNavController()
+            navController.navigateUp()
         }
     }
 
     private fun cancelButton() {
-        val cancelBtn = binding.buttonNegative
+        val cancelBtn = binding.dontSaveButton
         cancelBtn.setOnClickListener {
-            val intent = Intent(this, AddHabitActivity::class.java)
-            Log.d("AddHabitActivity", "Navigate to the MainActivity by nButton")
-            startActivity(intent)
+            findNavController().navigateUp()
         }
     }
 
@@ -162,8 +170,9 @@ class AddHabitActivity(private val habit: Habit? = null) : AppCompatActivity() {
             frequency != null &&
             count != null
         ) {
-            val newHabit =
+            newHabit =
                 Habit(
+                    0,
                     title!!,
                     description!!,
                     type!!,
@@ -174,28 +183,31 @@ class AddHabitActivity(private val habit: Habit? = null) : AppCompatActivity() {
                 )
 
             addHabit(newHabit)
+            Log.d(
+                "AddHabbitActivity",
+                "$title, $description, $type, $priority, $selectedColor, $frequency, $count"
+            )
             return true
         } else {
-            Toast.makeText(this.applicationContext, "Заполните все поля!", Toast.LENGTH_SHORT)
+            Toast.makeText(requireContext(), "Заполните все поля!", Toast.LENGTH_SHORT)
                 .show()
-            setHabit()
-            return true
+            Log.d(
+                "AddHabbitActivity",
+                "$title, $description, $type, $priority, $selectedColor, $frequency, $count"
+            )
+            return false
         }
     }
 
     private fun addHabit(newHabit: Habit) {
-        val s = "${newHabit.title},${newHabit.description},${newHabit.type},${newHabit.priority},${newHabit.title},${newHabit.color},${newHabit.title},${newHabit.frequency},${newHabit.count}"
-        val sharedPref = this.getPreferences(Context.MODE_PRIVATE) ?: return
-        with (sharedPref.edit()) {
-            putString(getString(R.string.preference_file_key), s)
-            apply()
-        }
+        stringHabit =
+            "${newHabit.title},${newHabit.description},${newHabit.type},${newHabit.priority},${newHabit.title},${newHabit.color},${newHabit.title},${newHabit.frequency},${newHabit.count}"
     }
 
     private fun setHabitType() {
         val rGroupView = binding.chooseType
 
-        val rButton = findViewById<RadioButton>(rGroupView.checkedRadioButtonId)
+        val rButton = binding.root.findViewById<RadioButton>(rGroupView.checkedRadioButtonId)
 
         val stringType = rButton?.text.toString()
         type = when (stringType) {
@@ -208,16 +220,21 @@ class AddHabitActivity(private val habit: Habit? = null) : AppCompatActivity() {
     private fun setHabitPriority() {
         val priorityView = binding.prioritySpinner
         val stringPriority = priorityView.selectedItem.toString()
-
+        Log.d("AddHabbitActivity", "какая-то хуита $stringPriority")
         priority = when (stringPriority) {
             "Низкий" -> 0
             "Средний" -> 1
             "Большой" -> 2
-            else -> null
+            else -> 2
         }
     }
 
+
     private fun dpToPx(dp: Int): Int {
         return (dp * resources.displayMetrics.density).toInt()
+    }
+
+    companion object {
+        val key = "KEY"
     }
 }

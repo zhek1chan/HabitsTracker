@@ -1,8 +1,11 @@
 package com.example.habitstracker
 
-import java.io.Serializable
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Habit(
+    val id: Int?,
     val title: String,
     val description: String,
     val type: Int,
@@ -10,7 +13,7 @@ data class Habit(
     val color: Int,
     val frequency: Int,
     val count: Int
-) : Serializable {
+) : Parcelable {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
