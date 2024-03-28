@@ -1,4 +1,4 @@
-package com.example.habitstracker.fragments.ui
+package com.example.habitstracker.ui.fragments
 
 import android.graphics.Color
 import android.os.Bundle
@@ -16,14 +16,16 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.habitstracker.Habit
+import com.example.habitstracker.R
 import com.example.habitstracker.color.ColorAdapter
 import com.example.habitstracker.color.GridSpacingItemDecoration
 import com.example.habitstracker.databinding.FragmentAddBinding
 import com.example.habitstracker.db.AppDataBase
 import com.example.habitstracker.db.HabitConvertor
 
-class AddFragment(private var habit: Habit? = null) : Fragment() {
+class AddHabitFragment(private var habit: Habit? = null) : Fragment() {
     private lateinit var binding: FragmentAddBinding
+    private var id: Int? = habit?.id
     private var selectedColor: Int? = habit?.color
     private var title: String? = habit?.title
     private var description: String? = habit?.description
@@ -48,6 +50,35 @@ class AddFragment(private var habit: Habit? = null) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (arguments?.getParcelable<Habit>("habit") != null) {
+            val h = arguments?.getParcelable<Habit>("habit")!!
+            id = h.id!!
+
+            binding.editTextName.setText(h.title)
+            title = h.title
+
+            binding.editDescription.setText(h.description)
+            description = h.description
+
+            //binding.prioritySpinner.setSelection(h.priority)
+            priority = h.priority
+
+            //binding.chooseType.check(h.type)
+            type = h.type
+
+            binding.colorPickerButton.setBackgroundColor(h.color)
+            selectedColor = h.color
+
+            binding.addPeriod.setText(h.frequency.toString())
+            frequency = h.frequency
+
+            binding.addCount.setText(h.count.toString())
+            count = h.count
+
+            binding.saveButton.setText(getString(R.string.save))
+            binding.nameOfScreen.setText(getString(R.string.edit_habit))
+            binding.deleteButton.visibility = View.VISIBLE
+        }
         val prioritySpinner = binding.prioritySpinner
         setTextInputListeners()
         val arrayAdapter = prioritySpinner.adapter as ArrayAdapter<String>
@@ -57,9 +88,9 @@ class AddFragment(private var habit: Habit? = null) : Fragment() {
             else -> arrayAdapter.getPosition("Большой")
         }
         prioritySpinner.setSelection(selection)
-        setColorPicker()
         saveButton()
         cancelButton()
+        deleteButton()
 
     }
 
@@ -142,11 +173,16 @@ class AddFragment(private var habit: Habit? = null) : Fragment() {
     private fun saveButton() {
         val okBtn = binding.saveButton
         okBtn.setOnClickListener {
-            setHabit()
-            db(requireContext()).habitDao().insert(convertor.map(newHabit))
-            Log.d("Inserted", "in db")
-            val navController = findNavController()
-            navController.navigateUp()
+            var check = setHabit()
+            if (id != null) {
+                db(requireContext()).habitDao().delete(id!!)
+            }
+            if (check) {
+                db(requireContext()).habitDao().insert(convertor.map(newHabit))
+                Log.d("Inserted", "in db")
+                val navController = findNavController()
+                navController.navigateUp()
+            }
         }
     }
 
@@ -157,11 +193,25 @@ class AddFragment(private var habit: Habit? = null) : Fragment() {
         }
     }
 
+    private fun deleteButton() {
+        val deleteBtn = binding.deleteButton
+        deleteBtn.setOnClickListener {
+            db(requireContext()).habitDao().delete(id!!)
+            findNavController().navigateUp()
+        }
+    }
+
     private fun setHabit(): Boolean {
-
-        setHabitType()
-        setHabitPriority()
-
+        if (type == null) {
+            setHabitType()
+        }
+        if (frequency == null) {
+            setHabitPriority()
+        }
+        if (selectedColor == null) {
+            setColorPicker()
+        }
+        val id = newHabit.id
         if (title != null &&
             description != null &&
             type != null &&
@@ -170,31 +220,39 @@ class AddFragment(private var habit: Habit? = null) : Fragment() {
             frequency != null &&
             count != null
         ) {
-            newHabit =
-                Habit(
-                    0,
-                    title!!,
-                    description!!,
-                    type!!,
-                    priority!!,
-                    selectedColor!!,
-                    frequency!!,
-                    count!!
-                )
-
-            addHabit(newHabit)
+            if (id == 0) {
+                newHabit =
+                    Habit(
+                        0,
+                        title!!,
+                        description!!,
+                        type!!,
+                        priority!!,
+                        selectedColor!!,
+                        frequency!!,
+                        count!!
+                    )
+            } else {
+                newHabit =
+                    Habit(
+                        id,
+                        title!!,
+                        description!!,
+                        type!!,
+                        priority!!,
+                        selectedColor!!,
+                        frequency!!,
+                        count!!
+                    )
+            }
             Log.d(
                 "AddHabbitActivity",
                 "$title, $description, $type, $priority, $selectedColor, $frequency, $count"
             )
             return true
         } else {
-            Toast.makeText(requireContext(), "Заполните все поля!", Toast.LENGTH_SHORT)
+            Toast.makeText(requireContext(), getString(R.string.alert), Toast.LENGTH_SHORT)
                 .show()
-            Log.d(
-                "AddHabbitActivity",
-                "$title, $description, $type, $priority, $selectedColor, $frequency, $count"
-            )
             return false
         }
     }
@@ -220,7 +278,6 @@ class AddFragment(private var habit: Habit? = null) : Fragment() {
     private fun setHabitPriority() {
         val priorityView = binding.prioritySpinner
         val stringPriority = priorityView.selectedItem.toString()
-        Log.d("AddHabbitActivity", "какая-то хуита $stringPriority")
         priority = when (stringPriority) {
             "Низкий" -> 0
             "Средний" -> 1

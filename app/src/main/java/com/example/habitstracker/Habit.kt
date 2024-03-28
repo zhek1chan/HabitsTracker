@@ -5,14 +5,14 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Habit(
-    val id: Int?,
-    val title: String,
-    val description: String,
-    val type: Int,
-    val priority: Int,
-    val color: Int,
-    val frequency: Int,
-    val count: Int
+    var id: Int?,
+    var title: String,
+    var description: String,
+    val type: Int, //enum
+    val priority: Int, //enum
+    var color: Int,
+    var frequency: Int,
+    var count: Int
 ) : Parcelable {
 
     override fun equals(other: Any?): Boolean {

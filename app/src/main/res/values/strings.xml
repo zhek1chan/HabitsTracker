@@ -36,4 +36,9 @@
     <string name="habits">Привычки:</string>
     <string name="good">Хорошие</string>
     <string name="bad">Плохие</string>
+    <string name="no_habits">Вы ещё не добавили ни одной привычки</string>
+    <string name="save">Сохранить</string>
+    <string name="edit_habit">Измение привычки:</string>
+    <string name="delete">Удалить</string>
+    <string name="alert">Сначала заполните все поля!</string>
 </resources>

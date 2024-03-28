@@ -1,13 +1,11 @@
 package com.example.habitstracker
 
-import android.graphics.Color
 import android.view.View
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import org.w3c.dom.Text
 
-class MainViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class HabitViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private val container: ConstraintLayout = view.findViewById(R.id.habitConstraintLayout)
     private val name: TextView = view.findViewById(R.id.name)
@@ -21,6 +19,7 @@ class MainViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         container.setBackgroundColor((view.color))
         name.text = view.title
         description.text = view.description
+        // TODO: stringres
         if (view.priority == 0){
             priority.text = "Низкий"
         } else if (view.priority == 1){

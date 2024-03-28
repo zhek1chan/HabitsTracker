@@ -1,4 +1,4 @@
-package com.example.habitstracker.fragments.ui
+package com.example.habitstracker.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

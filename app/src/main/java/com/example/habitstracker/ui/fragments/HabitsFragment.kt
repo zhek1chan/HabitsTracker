@@ -1,4 +1,4 @@
-package com.example.habitstracker.fragments.ui
+package com.example.habitstracker.ui.fragments
 
 import android.app.Activity
 import android.os.Bundle

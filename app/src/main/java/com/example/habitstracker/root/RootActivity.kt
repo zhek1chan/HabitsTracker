@@ -1,18 +1,13 @@
 package com.example.habitstracker.root
 
-import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import com.example.habitstracker.fragments.ui.HabitsFragment
-import com.example.habitstracker.fragments.ui.InfoFragment
 import com.example.habitstracker.R
 import com.example.habitstracker.databinding.TestBinding
 import com.google.android.material.navigation.NavigationView

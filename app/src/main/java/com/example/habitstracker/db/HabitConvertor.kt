@@ -5,6 +5,7 @@ import com.example.habitstracker.Habit
 class HabitConvertor {
     fun map(h: Habit): HabitEntity {
         return HabitEntity(
+            h.id!!,
             h.title,
             h.description,
             h.type,

@@ -7,7 +7,7 @@
     android:paddingTop="@dimen/layouts_padding"
     android:background="@color/white"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".fragments.ui.HabitsFragment">
+    tools:context=".ui.fragments.HabitsFragment">
 
     <LinearLayout
         android:paddingHorizontal="@dimen/common_padding"

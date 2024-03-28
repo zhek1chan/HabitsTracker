@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_navigation_graph"
-    app:startDestination="@id/listFragment">
+    app:startDestination="@id/infoFragment">
 
 
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.example.habitstracker.fragments.ui.GoodListFragment"
+        android:name="com.example.habitstracker.ui.fragments.ListFragment"
         android:label="MainActivity" >
         <action
             android:id="@+id/action_mainActivity_to_addHabitActivity"
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/addFragment"
-        android:name="com.example.habitstracker.fragments.ui.AddFragment"
+        android:name="com.example.habitstracker.ui.fragments.AddHabitFragment"
         android:label="AddHabitActivity" >
         <action
             android:id="@+id/action_addHabitActivity_to_mainActivity"
@@ -33,11 +33,11 @@
     </fragment>
     <fragment
         android:id="@+id/infoFragment"
-        android:name="com.example.habitstracker.fragments.ui.InfoFragment"
+        android:name="com.example.habitstracker.ui.fragments.InfoFragment"
         android:label="InfoFragment" />
     <fragment
         android:id="@+id/habitsFragment"
-        android:name="com.example.habitstracker.fragments.ui.HabitsFragment"
+        android:name="com.example.habitstracker.ui.fragments.HabitsFragment"
         android:label="HabitsFragment" >
         <action
             android:id="@+id/action_habitsFragment_to_addFragment"
