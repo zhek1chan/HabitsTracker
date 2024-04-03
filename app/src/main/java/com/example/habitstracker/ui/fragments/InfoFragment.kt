@@ -9,10 +9,6 @@ import com.example.habitstracker.databinding.FragmentAboutBinding
 
 class InfoFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = InfoFragment()
-    }
-
     private var _binding: FragmentAboutBinding? = null
     private val binding get() = _binding!!
 
@@ -20,7 +16,7 @@ class InfoFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentAboutBinding.inflate(inflater, container, false)
 
         return binding.root

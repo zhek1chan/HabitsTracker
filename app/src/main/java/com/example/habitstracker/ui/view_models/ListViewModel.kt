@@ -11,7 +11,7 @@ import com.example.habitstracker.db.HabitConvertor
 import com.example.habitstracker.db.HabitEntity
 import com.example.habitstracker.fragments.ListScreenState
 
-class ListViewModel() : ViewModel() {
+class ListViewModel : ViewModel() {
 
     private val db = AppDataBase
     private val convertor = HabitConvertor()
@@ -19,7 +19,7 @@ class ListViewModel() : ViewModel() {
     fun observeState(): LiveData<ListScreenState> = stateLiveData
     fun fillData(context: Context) {
         val listFromDb: List<HabitEntity> = db(context).habitDao().getAll()
-        var list: MutableList<Habit> = mutableListOf()
+        val list: MutableList<Habit> = mutableListOf()
         listFromDb.forEach {
             list.add(convertor.map(it))
         }
@@ -36,7 +36,4 @@ class ListViewModel() : ViewModel() {
         }
     }
 
-    fun addItem(item: Habit) {
-        //searchHistoryInteractor.addItem(item)
-    }
 }

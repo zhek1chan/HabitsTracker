@@ -20,7 +20,7 @@ import com.example.habitstracker.fragments.ListScreenState
 import com.example.habitstracker.ui.view_models.ListViewModel
 
 
-class ListFragment(val check: Boolean) : Fragment() {
+class ListFragment(private val check: Boolean) : Fragment() {
     private lateinit var binding: FragmentListBinding
     private lateinit var recyclerView: RecyclerView
     private var habitsList: MutableList<Habit> = mutableListOf()
@@ -40,7 +40,7 @@ class ListFragment(val check: Boolean) : Fragment() {
         fab.setOnClickListener {
             try {
                 findNavController().navigate(R.id.addFragment)
-            } catch (e: IllegalStateException) {
+            } catch (_: IllegalStateException) {
             }
         }
         recyclerView = binding.recyclerView

@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,8 +21,7 @@ import com.example.habitstracker.R
 import com.example.habitstracker.color.ColorAdapter
 import com.example.habitstracker.color.GridSpacingItemDecoration
 import com.example.habitstracker.databinding.FragmentAddBinding
-import com.example.habitstracker.db.AppDataBase
-import com.example.habitstracker.db.HabitConvertor
+import com.example.habitstracker.ui.view_models.AddHabitViewModel
 
 class AddHabitFragment(private var habit: Habit? = null) : Fragment() {
     private lateinit var binding: FragmentAddBinding
@@ -34,10 +34,8 @@ class AddHabitFragment(private var habit: Habit? = null) : Fragment() {
     private var frequency: Int? = habit?.frequency
     private var count: Int? = habit?.count
     private lateinit var colorPickerDialog: AlertDialog
-    private lateinit var stringHabit: String
-    private val db = AppDataBase
-    private val convertor = HabitConvertor()
     private var newHabit = Habit(0, "", "", 0, 0, 0, 0, 0)
+    private val viewModel by viewModels<AddHabitViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,6 +50,8 @@ class AddHabitFragment(private var habit: Habit? = null) : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         if (arguments?.getParcelable<Habit>("habit") != null) {
             val h = arguments?.getParcelable<Habit>("habit")!!
+
+            Log.d("AddHabitFragment", "Change habit $h")
             id = h.id!!
 
             binding.editTextName.setText(h.title)
@@ -75,9 +75,11 @@ class AddHabitFragment(private var habit: Habit? = null) : Fragment() {
             binding.addCount.setText(h.count.toString())
             count = h.count
 
-            binding.saveButton.setText(getString(R.string.save))
-            binding.nameOfScreen.setText(getString(R.string.edit_habit))
+            binding.saveButton.text = getString(R.string.save)
+            binding.nameOfScreen.text = getString(R.string.edit_habit)
             binding.deleteButton.visibility = View.VISIBLE
+        } else {
+            setColorPicker()
         }
         val prioritySpinner = binding.prioritySpinner
         setTextInputListeners()
@@ -160,9 +162,9 @@ class AddHabitFragment(private var habit: Habit? = null) : Fragment() {
             }
 
             colorPickerDialog = AlertDialog.Builder(requireContext())
-                .setTitle("Выберите цвет")
+                .setTitle(getString(R.string.pick_color))
                 .setView(recyclerView)
-                .setNegativeButton("Отмена") { dialog, _ ->
+                .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
                     dialog.dismiss()
                 }
                 .create()
@@ -173,13 +175,14 @@ class AddHabitFragment(private var habit: Habit? = null) : Fragment() {
     private fun saveButton() {
         val okBtn = binding.saveButton
         okBtn.setOnClickListener {
-            var check = setHabit()
-            if (id != null) {
-                db(requireContext()).habitDao().delete(id!!)
-            }
-            if (check) {
-                db(requireContext()).habitDao().insert(convertor.map(newHabit))
-                Log.d("Inserted", "in db")
+            if (setHabit()) {
+                if ((id != 0) && (id != null)) {
+                    viewModel.updateItem(newHabit, requireContext())
+                    Log.d("AddHabitFragment", "Changed in db")
+                } else {
+                    viewModel.addItem(newHabit, requireContext())
+                    Log.d("AddHabitFragment", "Inserted in db")
+                }
                 val navController = findNavController()
                 navController.navigateUp()
             }
@@ -196,7 +199,7 @@ class AddHabitFragment(private var habit: Habit? = null) : Fragment() {
     private fun deleteButton() {
         val deleteBtn = binding.deleteButton
         deleteBtn.setOnClickListener {
-            db(requireContext()).habitDao().delete(id!!)
+            viewModel.deleteItem(id!!, requireContext())
             findNavController().navigateUp()
         }
     }
@@ -205,13 +208,12 @@ class AddHabitFragment(private var habit: Habit? = null) : Fragment() {
         if (type == null) {
             setHabitType()
         }
-        if (frequency == null) {
+        if (priority == null) {
             setHabitPriority()
         }
         if (selectedColor == null) {
             setColorPicker()
         }
-        val id = newHabit.id
         if (title != null &&
             description != null &&
             type != null &&
@@ -220,7 +222,7 @@ class AddHabitFragment(private var habit: Habit? = null) : Fragment() {
             frequency != null &&
             count != null
         ) {
-            if (id == 0) {
+            if ((id == 0) || (id == null)) {
                 newHabit =
                     Habit(
                         0,
@@ -246,20 +248,19 @@ class AddHabitFragment(private var habit: Habit? = null) : Fragment() {
                     )
             }
             Log.d(
-                "AddHabbitActivity",
+                "AddHabitFragment",
                 "$title, $description, $type, $priority, $selectedColor, $frequency, $count"
             )
             return true
         } else {
+            Log.d(
+                "AddHabitFragment",
+                "$title, $description, $type, $priority, $selectedColor, $frequency, $count"
+            )
             Toast.makeText(requireContext(), getString(R.string.alert), Toast.LENGTH_SHORT)
                 .show()
             return false
         }
-    }
-
-    private fun addHabit(newHabit: Habit) {
-        stringHabit =
-            "${newHabit.title},${newHabit.description},${newHabit.type},${newHabit.priority},${newHabit.title},${newHabit.color},${newHabit.title},${newHabit.frequency},${newHabit.count}"
     }
 
     private fun setHabitType() {
@@ -289,9 +290,5 @@ class AddHabitFragment(private var habit: Habit? = null) : Fragment() {
 
     private fun dpToPx(dp: Int): Int {
         return (dp * resources.displayMetrics.density).toInt()
-    }
-
-    companion object {
-        val key = "KEY"
     }
 }
