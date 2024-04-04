@@ -23,7 +23,7 @@ import com.example.habitstracker.domain.color.GridSpacingItemDecoration
 import com.example.habitstracker.databinding.FragmentAddBinding
 import com.example.habitstracker.ui.view_models.AddHabitViewModel
 
-class AddHabitFragment(private var habit: Habit? = null) : Fragment() {
+class AddHabitFragment(habit: Habit? = null) : Fragment() {
     private lateinit var binding: FragmentAddBinding
     private var id: Int? = habit?.id
     private var selectedColor: Int? = habit?.color

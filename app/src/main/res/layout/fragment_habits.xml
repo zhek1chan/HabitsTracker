@@ -4,33 +4,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="@dimen/layouts_padding"
     android:background="@color/white"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.fragments.HabitsFragment">
 
-    <LinearLayout
-        android:paddingHorizontal="@dimen/common_padding"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/common_padding"
+        android:paddingTop="@dimen/layouts_padding">
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/habits"
             android:textSize="@dimen/main_text_size"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
 
-        <Button
+        <ImageView
             android:id="@+id/button_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/search"
-            android:layout_marginLeft="150dp">
-
-        </Button>
-    </LinearLayout>
+            android:background="@drawable/search"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+        </ImageView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.tabs.TabLayout
         android:layout_gravity="center_horizontal"

@@ -23,7 +23,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import java.util.Collections.swap
 
 
-class FilterFragment() : Fragment() {
+class SearchFragment() : Fragment() {
     private lateinit var binding: FragmentSearchBinding
     private lateinit var recyclerView: RecyclerView
     private var habitsList: MutableList<Habit> = mutableListOf()
@@ -256,7 +256,6 @@ class FilterFragment() : Fragment() {
                 if (it.title.lowercase().equals(searchText))
                     sortedList.add(it)
             }
-            Log.d("FNDFNDFFNDFO", "FDFDFDFFFDFD")
         } else {sortedList = habitsList}
     }
 
@@ -274,4 +273,5 @@ class FilterFragment() : Fragment() {
         }
         sortedList = habitsList
     }
+
 }
