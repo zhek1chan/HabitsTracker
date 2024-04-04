@@ -1,4 +1,4 @@
-package com.example.habitstracker.color
+package com.example.habitstracker.domain.color
 
 import android.content.Context
 import android.graphics.PorterDuff

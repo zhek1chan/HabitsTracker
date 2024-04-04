@@ -1,4 +1,4 @@
-package com.example.habitstracker.db
+package com.example.habitstracker.data.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

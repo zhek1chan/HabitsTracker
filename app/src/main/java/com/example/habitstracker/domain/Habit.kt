@@ -1,4 +1,4 @@
-package com.example.habitstracker
+package com.example.habitstracker.domain
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

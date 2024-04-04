@@ -1,6 +1,6 @@
-package com.example.habitstracker.db
+package com.example.habitstracker.data.db
 
-import com.example.habitstracker.Habit
+import com.example.habitstracker.domain.Habit
 
 class HabitConvertor {
     fun map(h: Habit): HabitEntity {

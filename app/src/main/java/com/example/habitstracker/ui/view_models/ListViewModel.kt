@@ -5,11 +5,11 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.habitstracker.Habit
-import com.example.habitstracker.db.AppDataBase
-import com.example.habitstracker.db.HabitConvertor
-import com.example.habitstracker.db.HabitEntity
-import com.example.habitstracker.fragments.ListScreenState
+import com.example.habitstracker.domain.Habit
+import com.example.habitstracker.data.db.AppDataBase
+import com.example.habitstracker.data.db.HabitConvertor
+import com.example.habitstracker.data.db.HabitEntity
+import com.example.habitstracker.ui.ListScreenState
 
 class ListViewModel : ViewModel() {
 

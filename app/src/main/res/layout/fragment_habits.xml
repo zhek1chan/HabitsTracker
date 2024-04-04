@@ -11,7 +11,7 @@
 
     <LinearLayout
         android:paddingHorizontal="@dimen/common_padding"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
@@ -21,6 +21,15 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/button_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/search"
+            android:layout_marginLeft="150dp">
+
+        </Button>
     </LinearLayout>
 
     <com.google.android.material.tabs.TabLayout

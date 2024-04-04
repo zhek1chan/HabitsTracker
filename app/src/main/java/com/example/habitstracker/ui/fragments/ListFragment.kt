@@ -12,11 +12,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.habitstracker.Habit
-import com.example.habitstracker.HabitsRVAdapter
+import com.example.habitstracker.domain.Habit
+import com.example.habitstracker.ui.HabitsRVAdapter
 import com.example.habitstracker.R
 import com.example.habitstracker.databinding.FragmentListBinding
-import com.example.habitstracker.fragments.ListScreenState
+import com.example.habitstracker.ui.ListScreenState
 import com.example.habitstracker.ui.view_models.ListViewModel
 
 

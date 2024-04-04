@@ -1,9 +1,11 @@
-package com.example.habitstracker
+package com.example.habitstracker.ui
 
 import android.view.View
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.example.habitstracker.domain.Habit
+import com.example.habitstracker.R
 
 class HabitViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 

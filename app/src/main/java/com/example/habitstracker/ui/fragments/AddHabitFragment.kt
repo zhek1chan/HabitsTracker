@@ -16,10 +16,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.habitstracker.Habit
+import com.example.habitstracker.domain.Habit
 import com.example.habitstracker.R
-import com.example.habitstracker.color.ColorAdapter
-import com.example.habitstracker.color.GridSpacingItemDecoration
+import com.example.habitstracker.domain.color.ColorAdapter
+import com.example.habitstracker.domain.color.GridSpacingItemDecoration
 import com.example.habitstracker.databinding.FragmentAddBinding
 import com.example.habitstracker.ui.view_models.AddHabitViewModel
 

@@ -2,9 +2,9 @@ package com.example.habitstracker.ui.view_models
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
-import com.example.habitstracker.Habit
-import com.example.habitstracker.db.AppDataBase
-import com.example.habitstracker.db.HabitConvertor
+import com.example.habitstracker.domain.Habit
+import com.example.habitstracker.data.db.AppDataBase
+import com.example.habitstracker.data.db.HabitConvertor
 
 class AddHabitViewModel : ViewModel() {
 

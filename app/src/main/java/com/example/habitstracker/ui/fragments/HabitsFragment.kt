@@ -6,10 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.habitstracker.PageSelector
 import com.example.habitstracker.R
 import com.example.habitstracker.databinding.FragmentHabitsBinding
-import com.example.habitstracker.fragments.FragmentsAdapter
+import com.example.habitstracker.domain.adapters.FragmentsAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -52,7 +53,9 @@ class HabitsFragment : Fragment(), PageSelector {
                 override fun onTabReselected(tab: TabLayout.Tab?) {}
             }
         )
-
+        binding.buttonSearch.setOnClickListener {
+            findNavController().navigate(R.id.filterFragment)
+        }
     }
 
     override fun navigateTo(page: Int) {
