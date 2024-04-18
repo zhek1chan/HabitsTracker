@@ -29,7 +29,7 @@
     <string-array name="habit_priorities">
         <item>Большой</item>
         <item>Средний</item>
-        <item>Маленький</item>
+        <item>Низкий</item>
     </string-array>
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
@@ -55,4 +55,6 @@
     <string name="frequency_sort">Сортировать по частоте:</string>
     <string name="apply">Применить</string>
     <string name="error_no_filters">Вы не указали параметров фильтрации</string>
+    <string name="type_good">Хороший</string>
+    <string name="type_bad">Плохой</string>
 </resources>

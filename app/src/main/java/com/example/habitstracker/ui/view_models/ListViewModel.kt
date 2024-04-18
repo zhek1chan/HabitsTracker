@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.habitstracker.domain.Habit
+import com.example.habitstracker.domain.models.Habit
 import com.example.habitstracker.data.db.AppDataBase
 import com.example.habitstracker.data.db.HabitConvertor
 import com.example.habitstracker.data.db.HabitEntity

@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.example.habitstracker.domain.Habit
+import com.example.habitstracker.domain.models.Habit
 import com.example.habitstracker.R
 
 class HabitViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -21,19 +21,8 @@ class HabitViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         container.setBackgroundColor((view.color))
         name.text = view.title
         description.text = view.description
-        // TODO: stringres
-        if (view.priority == 0){
-            priority.text = "Низкий"
-        } else if (view.priority == 1){
-            priority.text = "Средний"
-        } else {
-            priority.text = "Высокий"
-        }
-        if (view.type == 0){
-            type.text = "Хороший"
-        } else {
-            type.text = "Плохой"
-        }
+        priority.text = view.priority.value
+        type.text = view.type.value
         period.text = view.frequency.toString()
         num.text = view.count.toString()
     }

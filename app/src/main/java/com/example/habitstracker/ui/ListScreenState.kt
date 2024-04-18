@@ -1,6 +1,6 @@
 package com.example.habitstracker.ui
 
-import com.example.habitstracker.domain.Habit
+import com.example.habitstracker.domain.models.Habit
 
 sealed class ListScreenState {
     data object NoHabitsAdded : ListScreenState()

@@ -12,10 +12,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.habitstracker.domain.Habit
+import com.example.habitstracker.domain.models.Habit
 import com.example.habitstracker.ui.HabitsRVAdapter
 import com.example.habitstracker.R
 import com.example.habitstracker.databinding.FragmentListBinding
+import com.example.habitstracker.domain.models.Type
 import com.example.habitstracker.ui.ListScreenState
 import com.example.habitstracker.ui.view_models.ListViewModel
 
@@ -90,11 +91,11 @@ class ListFragment(private val check: Boolean) : Fragment() {
         habitsList.clear()
         habits.forEach {
             if (!check) {
-                if (it.type == 0) {
+                if (it.type == Type.Good) {
                     habitsList.add(it)
                 }
             } else {
-                if (it.type == 1) {
+                if (it.type == Type.Bad) {
                     habitsList.add(it)
                 }
             }

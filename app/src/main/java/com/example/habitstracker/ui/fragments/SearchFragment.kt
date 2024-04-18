@@ -15,7 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.habitstracker.R
 import com.example.habitstracker.databinding.FragmentSearchBinding
-import com.example.habitstracker.domain.Habit
+import com.example.habitstracker.domain.models.Habit
+import com.example.habitstracker.domain.models.Type
 import com.example.habitstracker.ui.HabitsRVAdapter
 import com.example.habitstracker.ui.ListScreenState
 import com.example.habitstracker.ui.view_models.ListViewModel
@@ -23,7 +24,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import java.util.Collections.swap
 
 
-class SearchFragment() : Fragment() {
+class SearchFragment : Fragment() {
     private lateinit var binding: FragmentSearchBinding
     private lateinit var recyclerView: RecyclerView
     private var habitsList: MutableList<Habit> = mutableListOf()
@@ -69,10 +70,10 @@ class SearchFragment() : Fragment() {
                 if ((sortByRegular == null) && (sortByBad == null) && (sortByOld == null)) {
                     //только поисковый текст
                     searchByText()
-                } else if ((sortByRegular == null) && (sortByBad == null) && (sortByOld != null)) {
+                } else if ((sortByRegular == null) && (sortByBad == null)) {
                     //сорт по дате
                     filterByData()
-                } else if ((sortByRegular == null) && (sortByBad != null) && (sortByOld == null)) {
+                } else if ((sortByRegular == null) && (sortByOld == null)) {
                     //сортировка по типу
                     filterByType()
                 } else if ((sortByRegular != null) && (sortByBad == null) && (sortByOld == null)) {
@@ -86,12 +87,12 @@ class SearchFragment() : Fragment() {
                     //сортировка по частоте и дате
                     filterByRegularity()
                     filterByData()
-                } else if ((sortByRegular == null) && (sortByBad != null)) {
+                } else if (sortByRegular == null)  {
                     //сортировка по частоте и дате
                     filterByType()
                     filterByData()
                     getData(sortedList)
-                } else if ((sortByRegular != null)) {
+                } else {
                     //сортировка по частоте и дате, и по типу
                     filterByType()
                     filterByData()
@@ -189,14 +190,14 @@ class SearchFragment() : Fragment() {
         }
     }
 
-    fun filterByRegularity() {
+    private fun filterByRegularity() {
         if (sortByRegular == false) {
             var sorted = false
             while (!sorted) {
                 sorted = true
                 for (i in 1 until sortedList.size) {
-                    val previous: Habit = sortedList.get(i - 1)
-                    val current: Habit = sortedList.get(i)
+                    val previous: Habit = sortedList[i - 1]
+                    val current: Habit = sortedList[i]
                     if (previous.frequency > current.frequency) {
                         swap(sortedList, i - 1, i)
                         sorted = false
@@ -208,8 +209,8 @@ class SearchFragment() : Fragment() {
             while (!sorted) {
                 sorted = true
                 for (i in 1 until sortedList.size) {
-                    val previous: Habit = sortedList.get(i - 1)
-                    val current: Habit = sortedList.get(i)
+                    val previous: Habit = sortedList[i - 1]
+                    val current: Habit = sortedList[i]
                     if (previous.frequency < current.frequency) {
                         swap(sortedList, i - 1, i)
                         sorted = false
@@ -220,32 +221,22 @@ class SearchFragment() : Fragment() {
         Log.d("FilterFragment", "Sorted by reg $sortedList")
     }
 
-    fun filterByData() {
+    private fun filterByData() {
         sortedList = sortedList.asReversed()
         Log.d("Filter", "Sorted by data $sortedList")
     }
 
-    fun filterByType() {
-        if (sortByBad == true) {
-            var i = 0
-            while (i < sortedList.size) {
-                val h: Habit = sortedList.get(i)
-                if (h.type == 0) {
-                    sortedList.remove(h)
-                    i--
-                }
-                i++
+    private fun filterByType() {
+        sortedList = if (sortByBad == true) {
+            val list = sortedList.filter {
+                it.type == Type.Bad
             }
+            list.toMutableList()
         } else {
-            var i = 0
-            while (i < sortedList.size) {
-                val h: Habit = sortedList.get(i)
-                if (h.type == 1) {
-                    sortedList.remove(h)
-                    i--
-                }
-                i++
+            val list = sortedList.filter {
+                it.type == Type.Good
             }
+            list.toMutableList()
         }
     }
 
@@ -253,7 +244,7 @@ class SearchFragment() : Fragment() {
         if (!searchText.isNullOrEmpty() && searchText != "") {
             sortedList.clear()
             habitsList.forEach {
-                if (it.title.lowercase().equals(searchText))
+                if (it.title.lowercase() == searchText)
                     sortedList.add(it)
             }
         } else {sortedList = habitsList}
