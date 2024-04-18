@@ -23,7 +23,7 @@ class RootActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             supportFragmentManager.findFragmentById(R.id.FragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
 
-        drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
+        drawerLayout = findViewById(R.id.drawer_layout)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -49,19 +49,10 @@ class RootActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val navController = nav.navController
         when (item.itemId) {
             R.id.main -> navController.navigate(R.id.habitsFragment)
-
             R.id.infoFragment -> navController.navigate(R.id.infoFragment)
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START)
-        } else {
-            onBackPressedDispatcher.onBackPressed()
-        }
-    }
 }
