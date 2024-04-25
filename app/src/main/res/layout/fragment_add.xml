@@ -13,6 +13,7 @@
         android:text="@string/new_habit_creation"
         android:textSize="25sp"
         android:textStyle="bold"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -24,6 +25,7 @@
         android:layout_height="wrap_content"
         android:text="@string/name"
         android:textSize="@dimen/small_text"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/name_of_screen"/>
 
@@ -46,6 +48,7 @@
         android:layout_height="wrap_content"
         android:text="@string/description"
         android:textSize="@dimen/small_text"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="@id/naming"
         app:layout_constraintTop_toBottomOf="@id/naming"/>
 
@@ -66,6 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/priority_head"
+        android:textColor="@color/black"
         android:textSize="@dimen/small_text"
         app:layout_constraintStart_toStartOf="@id/description"
         app:layout_constraintTop_toBottomOf="@id/description" />
@@ -86,6 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/type"
+        android:textColor="@color/black"
         android:textSize="@dimen/small_text"
         app:layout_constraintTop_toBottomOf="@+id/priority_spinner"
         tools:ignore="MissingConstraints" />
@@ -120,6 +125,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/choose_color"
+        android:textColor="@color/black"
         android:textSize="@dimen/small_text"
         app:layout_constraintTop_toBottomOf="@+id/type"
         tools:ignore="MissingConstraints" />
@@ -144,6 +150,7 @@
         android:layout_marginTop="25dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:text="@string/choose_period"
         android:textSize="@dimen/small_text"
         app:layout_constraintTop_toBottomOf="@+id/fragmentAddColorLabel"
@@ -176,6 +183,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="22dp"
         android:text="@string/choose_count"
+        android:textColor="@color/black"
         android:textSize="@dimen/small_text"
         app:layout_constraintTop_toBottomOf="@id/fragmentAddPeriodContainer"
         tools:ignore="MissingConstraints" />

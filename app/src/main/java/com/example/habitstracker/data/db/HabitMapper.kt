@@ -2,7 +2,7 @@ package com.example.habitstracker.data.db
 
 import com.example.habitstracker.domain.models.Habit
 
-class HabitConvertor {
+class HabitMapper {
     fun map(h: Habit): HabitEntity {
         return HabitEntity(
             h.id!!,

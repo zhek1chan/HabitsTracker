@@ -47,7 +47,7 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
-        viewModel.fillData(requireContext())
+        viewModel.fillData(requireContext(), this)
         viewModel.observeState().observe(viewLifecycleOwner) {
             render(it)
         }
@@ -61,6 +61,7 @@ class SearchFragment : Fragment() {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
         }
         listenFilterButtons()
+
         binding.buttonApply.setOnClickListener {
             if (binding.buttonApply.text == getString(R.string.cancel)) {
                 cancelFilters()
@@ -72,34 +73,43 @@ class SearchFragment : Fragment() {
                     searchByText()
                 } else if ((sortByRegular == null) && (sortByBad == null)) {
                     //сорт по дате
+                    searchByText()
                     filterByData()
                 } else if ((sortByRegular == null) && (sortByOld == null)) {
                     //сортировка по типу
+                    searchByText()
                     filterByType()
                 } else if ((sortByRegular != null) && (sortByBad == null) && (sortByOld == null)) {
                     //сортировка по частоте
+                    searchByText()
                     filterByRegularity()
                 } else if ((sortByRegular != null) && (sortByBad != null) && (sortByOld == null)) {
                     //сортировка по частоте и типу
+                    searchByText()
                     filterByRegularity()
                     filterByType()
                 } else if ((sortByRegular != null) && (sortByBad == null)) {
                     //сортировка по частоте и дате
+                    searchByText()
                     filterByRegularity()
                     filterByData()
                 } else if (sortByRegular == null)  {
                     //сортировка по частоте и дате
+                    searchByText()
                     filterByType()
                     filterByData()
-                    getData(sortedList)
                 } else {
                     //сортировка по частоте и дате, и по типу
+                    searchByText()
                     filterByType()
                     filterByData()
                     filterByRegularity()
                 }
                 if ((sortByRegular != null) || (sortByBad != null) || (sortByOld != null) || (!searchText.isNullOrEmpty())) {
                     getData(sortedList)
+                    if (sortedList.isEmpty()) {
+                        showError()
+                    } else getData(sortedList)
                     binding.buttonApply.setText(R.string.cancel)
                     binding.buttonApply.setBackgroundColor(resources.getColor(R.color.red))
                 } else {
@@ -111,6 +121,10 @@ class SearchFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun showError() {
+        Toast.makeText(context, getString(R.string.nothing_found_error), Toast.LENGTH_LONG).show()
     }
 
     private fun clickAdapting(item: Habit) {
@@ -154,7 +168,6 @@ class SearchFragment : Fragment() {
         }
         recyclerView.adapter?.notifyDataSetChanged()
         Log.d("FilterFragment", "$habitsList")
-
     }
 
     private fun listenFilterButtons() {
@@ -247,7 +260,8 @@ class SearchFragment : Fragment() {
                 if (it.title.lowercase() == searchText)
                     sortedList.add(it)
             }
-        } else {sortedList = habitsList}
+        }
+        Log.d("Filter", "Sorted by naming $sortedList")
     }
 
     private fun cancelFilters() {
@@ -258,7 +272,7 @@ class SearchFragment : Fragment() {
         binding.chooseType.clearCheck()
         binding.chooseFrequency.clearCheck()
         binding.editTextName.text.clear()
-        viewModel.fillData(requireContext())
+        viewModel.fillData(requireContext(), this)
         viewModel.observeState().observe(viewLifecycleOwner) {
             render(it)
         }

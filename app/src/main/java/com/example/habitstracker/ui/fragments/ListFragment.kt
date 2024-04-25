@@ -46,7 +46,7 @@ class ListFragment(private val check: Boolean) : Fragment() {
         }
         recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
-        viewModel.fillData(requireContext())
+        viewModel.fillData(requireContext(), this)
         viewModel.observeState().observe(viewLifecycleOwner) {
             render(it)
         }
@@ -65,7 +65,6 @@ class ListFragment(private val check: Boolean) : Fragment() {
         when (state) {
             is ListScreenState.Data -> getData(state.data)
             is ListScreenState.NoHabitsAdded -> showEmpty()
-            else -> {}
         }
     }
 
@@ -78,6 +77,7 @@ class ListFragment(private val check: Boolean) : Fragment() {
     override fun onResume() {
         super.onResume()
         habitsList.clear()
+        viewModel.fillData(requireContext(), this)
         viewModel.observeState().observe(viewLifecycleOwner) {
             render(it)
         }
@@ -87,7 +87,6 @@ class ListFragment(private val check: Boolean) : Fragment() {
     private fun getData(habits: List<Habit>) {
         binding.noHabits.visibility = View.GONE
         binding.recyclerView.visibility = View.VISIBLE
-
         habitsList.clear()
         habits.forEach {
             if (!check) {
