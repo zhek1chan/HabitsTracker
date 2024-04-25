@@ -7,7 +7,6 @@ import com.example.habitstracker.data.db.AppDataBase
 import com.example.habitstracker.data.db.HabitMapper
 import com.example.habitstracker.domain.models.Habit
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class AddHabitViewModel : ViewModel() {
 
