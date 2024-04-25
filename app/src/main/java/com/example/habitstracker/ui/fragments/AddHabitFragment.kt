@@ -24,13 +24,10 @@ import com.example.habitstracker.domain.models.Habit
 import com.example.habitstracker.domain.models.Priority
 import com.example.habitstracker.domain.models.Type
 import com.example.habitstracker.ui.view_models.AddHabitViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
 
-class AddHabitFragment(habit: Habit? = null) : Fragment(), CoroutineScope {
+class AddHabitFragment(habit: Habit? = null) : Fragment() {
     private lateinit var binding: FragmentAddBinding
     private var id: Int? = habit?.id
     private var selectedColor: Int? = habit?.color
@@ -43,8 +40,6 @@ class AddHabitFragment(habit: Habit? = null) : Fragment(), CoroutineScope {
     private lateinit var colorPickerDialog: AlertDialog
     private var newHabit = Habit(0, "", "", Type.Bad, Priority.Low, 0, 0, 0)
     private val viewModel by viewModels<AddHabitViewModel>()
-    private var job: Job = Job()
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -125,7 +120,6 @@ class AddHabitFragment(habit: Habit? = null) : Fragment(), CoroutineScope {
 
         binding.editDescription.doOnTextChanged { text, _, _, _ ->
             description = text.toString()
-            Log.d("Description", "$text")
         }
 
         binding.addPeriod.doOnTextChanged { text, _, _, _ ->
@@ -198,14 +192,10 @@ class AddHabitFragment(habit: Habit? = null) : Fragment(), CoroutineScope {
         okBtn.setOnClickListener {
             if (setHabit()) {
                 if ((id != 0) && (id != null)) {
-                    launch {
-                        viewModel.updateItem(newHabit, requireContext())
-                    }
+                    viewModel.updateItem(newHabit, requireContext())
                     Log.d("AddHabitFragment", "Changed in db")
                 } else {
-                    launch {
-                        viewModel.addItem(newHabit, requireContext())
-                    }
+                    viewModel.addItem(newHabit, requireContext())
                     Log.d("AddHabitFragment", "Inserted in db")
                 }
                 val navController = findNavController()
@@ -224,9 +214,7 @@ class AddHabitFragment(habit: Habit? = null) : Fragment(), CoroutineScope {
     private fun deleteButton() {
         val deleteBtn = binding.deleteButton
         deleteBtn.setOnClickListener {
-            launch {
-                viewModel.deleteItem(id!!, requireContext())
-            }
+            viewModel.deleteItem(id!!, requireContext())
             findNavController().navigateUp()
         }
     }
@@ -307,6 +295,4 @@ class AddHabitFragment(habit: Habit? = null) : Fragment(), CoroutineScope {
         return (dp * resources.displayMetrics.density).toInt()
     }
 
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.IO + job
 }
