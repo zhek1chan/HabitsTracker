@@ -1,4 +1,4 @@
-package com.example.habitstracker
+package com.example.habitstracker.domain.color
 
 import android.content.Context
 import android.graphics.PorterDuff
@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.habitstracker.R
 
 class ColorAdapter(
     private val context: Context,

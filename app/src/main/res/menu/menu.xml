@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="co.vecmocon.MainActivity">
+    <item
+        android:id="@+id/main"
+        android:icon="@drawable/home_page"
+        android:title="@string/main" />
+    <item
+        android:id="@+id/infoFragment"
+        android:icon="@drawable/info"
+        android:title="@string/info" />
+</menu>
