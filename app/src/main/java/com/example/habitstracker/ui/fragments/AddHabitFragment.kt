@@ -308,5 +308,5 @@ class AddHabitFragment(habit: Habit? = null) : Fragment(), CoroutineScope {
     }
 
     override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
+        get() = Dispatchers.IO + job
 }
