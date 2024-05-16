@@ -11,7 +11,6 @@ class HabitsRVAdapter(private val habits: List<Habit>, private val clickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HabitViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.habit, parent, false)
-
         return HabitViewHolder(view)
     }
 
@@ -25,6 +24,7 @@ class HabitsRVAdapter(private val habits: List<Habit>, private val clickListener
         holder.itemView.setOnClickListener {
             clickListener.onClick(habits[position])
         }
+        holder.setIsRecyclable(false)
     }
     fun interface Click {
         fun onClick(habit: Habit)

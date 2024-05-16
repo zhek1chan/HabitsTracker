@@ -39,7 +39,7 @@
         app:fabSize="mini"
         android:contentDescription="@string/add_text"
         android:layout_gravity="bottom"
-        android:backgroundTint="@color/yp_blue"
+        android:backgroundTint="@color/yp_blue_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="16dp"/>

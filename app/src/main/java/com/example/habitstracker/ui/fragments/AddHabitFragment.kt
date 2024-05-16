@@ -18,12 +18,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.habitstracker.R
 import com.example.habitstracker.databinding.FragmentAddBinding
+import com.example.habitstracker.domain.color.ColorAdapter
+import com.example.habitstracker.domain.color.GridSpacingItemDecoration
 import com.example.habitstracker.domain.models.Habit
 import com.example.habitstracker.domain.models.Priority
 import com.example.habitstracker.domain.models.Type
-import com.example.habitstracker.domain.color.ColorAdapter
-import com.example.habitstracker.domain.color.GridSpacingItemDecoration
 import com.example.habitstracker.ui.view_models.AddHabitViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class AddHabitFragment(habit: Habit? = null) : Fragment() {
     private lateinit var binding: FragmentAddBinding
@@ -38,7 +40,6 @@ class AddHabitFragment(habit: Habit? = null) : Fragment() {
     private lateinit var colorPickerDialog: AlertDialog
     private var newHabit = Habit(0, "", "", Type.Bad, Priority.Low, 0, 0, 0)
     private val viewModel by viewModels<AddHabitViewModel>()
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -119,7 +120,6 @@ class AddHabitFragment(habit: Habit? = null) : Fragment() {
 
         binding.editDescription.doOnTextChanged { text, _, _, _ ->
             description = text.toString()
-            Log.d("Description", "$text")
         }
 
         binding.addPeriod.doOnTextChanged { text, _, _, _ ->
@@ -294,4 +294,5 @@ class AddHabitFragment(habit: Habit? = null) : Fragment() {
     private fun dpToPx(dp: Int): Int {
         return (dp * resources.displayMetrics.density).toInt()
     }
+
 }
