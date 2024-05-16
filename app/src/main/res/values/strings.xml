@@ -59,4 +59,6 @@
     <string name="type_bad">Плохой</string>
     <string name="five">5</string>
     <string name="nothing_found_error">Ничего не нашлось</string>
+    <string name="error_synch">Не удалось получить данные с сервера</string>
+    <string name="success">Данные синхронизированы успешно</string>
 </resources>

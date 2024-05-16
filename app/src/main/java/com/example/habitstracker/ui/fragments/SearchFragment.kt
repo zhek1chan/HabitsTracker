@@ -139,6 +139,7 @@ class SearchFragment : Fragment() {
         when (state) {
             is ListScreenState.Data -> getData(state.data)
             is ListScreenState.NoHabitsAdded -> showEmpty()
+            else -> showEmpty()
         }
     }
 

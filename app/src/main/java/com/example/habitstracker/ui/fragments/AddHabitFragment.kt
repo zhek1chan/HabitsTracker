@@ -38,7 +38,7 @@ class AddHabitFragment(habit: Habit? = null) : Fragment() {
     private var frequency: Int? = habit?.frequency
     private var count: Int? = habit?.count
     private lateinit var colorPickerDialog: AlertDialog
-    private var newHabit = Habit(0, "", "", Type.Bad, Priority.Low, 0, 0, 0)
+    private var newHabit = Habit(null, "","", "", Type.Bad, Priority.Low, 0, 0, 0)
     private val viewModel by viewModels<AddHabitViewModel>()
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -236,6 +236,7 @@ class AddHabitFragment(habit: Habit? = null) : Fragment() {
                 newHabit =
                     Habit(
                         0,
+                        "",
                         title!!,
                         description!!,
                         type!!,
@@ -248,6 +249,7 @@ class AddHabitFragment(habit: Habit? = null) : Fragment() {
                 newHabit =
                     Habit(
                         id,
+                        "",
                         title!!,
                         description!!,
                         type!!,

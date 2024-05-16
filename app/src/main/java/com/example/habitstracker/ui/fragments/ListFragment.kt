@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -63,9 +64,28 @@ class ListFragment(private val check: Boolean) : Fragment() {
 
     private fun render(state: ListScreenState) {
         when (state) {
+            is ListScreenState.Loading -> showProgressBar()
+            is ListScreenState.Error -> showToast(false)
+            is ListScreenState.Success -> showToast(true)
             is ListScreenState.Data -> getData(state.data)
             is ListScreenState.NoHabitsAdded -> showEmpty()
         }
+    }
+
+    private fun showProgressBar() {
+
+    }
+
+    private fun showToast(b: Boolean) {
+        val text = if (b == false) {
+            resources.getString(R.string.error_synch)
+        } else {
+            resources.getString(R.string.success)
+        }
+        val duration = Toast.LENGTH_SHORT
+
+        val toast = Toast.makeText(requireContext(), text, duration)
+        toast.show()
     }
 
     private fun showEmpty() {
@@ -99,7 +119,6 @@ class ListFragment(private val check: Boolean) : Fragment() {
                 }
             }
         }
-
         recyclerView.adapter = HabitsRVAdapter(habitsList) {
             clickAdapting(it)
         }
