@@ -19,6 +19,7 @@ class AddHabitViewModel : ViewModel() {
         }
     }
 
+    // TODO: catch delete func to be done faster than navigation 
     fun addItem(item: Habit, context: Context) {
         viewModelScope.launch {
             db(context).habitDao().insert(convertor.map(item))
