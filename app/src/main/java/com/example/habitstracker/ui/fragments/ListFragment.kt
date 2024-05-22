@@ -73,11 +73,12 @@ class ListFragment(private val check: Boolean) : Fragment() {
     }
 
     private fun showProgressBar() {
-
+        binding.loadingIndicator.visibility = View.VISIBLE
     }
 
     private fun showToast(b: Boolean) {
-        val text = if (b == false) {
+        binding.loadingIndicator.visibility = View.GONE
+        /*val text = if (b == false) {
             resources.getString(R.string.error_synch)
         } else {
             resources.getString(R.string.success)
@@ -85,10 +86,11 @@ class ListFragment(private val check: Boolean) : Fragment() {
         val duration = Toast.LENGTH_SHORT
 
         val toast = Toast.makeText(requireContext(), text, duration)
-        toast.show()
+        toast.show()*/
     }
 
     private fun showEmpty() {
+        binding.loadingIndicator.visibility = View.GONE
         binding.noHabits.visibility = View.VISIBLE
         binding.recyclerView.visibility = View.GONE
     }
@@ -105,6 +107,7 @@ class ListFragment(private val check: Boolean) : Fragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun getData(habits: List<Habit>) {
+        binding.loadingIndicator.visibility = View.GONE
         binding.noHabits.visibility = View.GONE
         binding.recyclerView.visibility = View.VISIBLE
         habitsList.clear()
@@ -123,8 +126,6 @@ class ListFragment(private val check: Boolean) : Fragment() {
             clickAdapting(it)
         }
         recyclerView.adapter?.notifyDataSetChanged()
-        Log.d("ListFragment", "$habitsList")
-
     }
 
     companion object {

@@ -94,8 +94,24 @@ class ActualizeDatabaseWorker(private val ctx: Context, params: WorkerParameters
         private suspend fun insertAllHabits(habits: List<HabitEntity>, context: Context) =
             withContext(Dispatchers.IO) {
                 if (habits.isNotEmpty()) {
+                    db(context).habitDao().deleteSame()
                     habits.forEach {
-                        db(context).habitDao().insert(it.copy(id = null))
+                        db(context).habitDao().insert(
+                            HabitEntity(
+                                null,
+                                it.uid,
+                                it.title,
+                                it.description,
+                                it.type,
+                                it.priority,
+                                it.color,
+                                it.frequency,
+                                it.count,
+                                it.lastModified,
+                                it.date,
+                                it.isActual
+                            )
+                        )
                     }
                     Log.d("INSERTED FROM SERV", "$habits")
                 }

@@ -29,4 +29,7 @@ interface HabitsDao {
 
     @Query("SELECT * FROM habits_table")
     suspend fun getNotActualHabits() : List<HabitEntity>
+
+    @Query("DELETE FROM habits_table WHERE isActual = 1")
+    suspend fun deleteSame()
 }

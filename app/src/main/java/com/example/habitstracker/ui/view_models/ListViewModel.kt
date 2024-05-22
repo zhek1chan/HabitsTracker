@@ -32,6 +32,8 @@ class ListViewModel : ViewModel() {
                 list.forEach {
                     if (item == it) {
                         duplicated = true
+                    } else if (item.uid == it.uid) {
+                        duplicated = true
                     }
                 }
                 if (!duplicated) {
@@ -44,7 +46,6 @@ class ListViewModel : ViewModel() {
     }
 
     private fun processResult(habits: List<Habit>) {
-        Log.d("ListVM", "ProcessResult")
         if (habits.isEmpty()) {
             stateLiveData.postValue(ListScreenState.NoHabitsAdded)
         } else {

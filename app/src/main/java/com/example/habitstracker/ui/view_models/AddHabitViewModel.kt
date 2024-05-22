@@ -21,9 +21,10 @@ class AddHabitViewModel : ViewModel() {
     private val db = AppDataBase
     private val convertor = HabitMapper()
     private val convertorEntity = HabitEntityMapper()
-    fun deleteItem(id: Int, context: Context) {
+    fun deleteItem(item: Habit, context: Context) {
         viewModelScope.launch {
-            db(context).habitDao().delete(id)
+            DoubletappApi.habitApiService.deleteHabit(item.uid)
+            db(context).habitDao().delete(item.id!!)
         }
     }
 
@@ -46,7 +47,16 @@ class AddHabitViewModel : ViewModel() {
                             val putHabitResponse = response.body()
 
                             putHabitResponse?.let {
-                                db(context).habitDao().insert(habit.copy(uid = putHabitResponse.uid, isActual = true))
+                                if (habit.uid.isNotEmpty()) {
+                                    db(context).habitDao().insert(habit.copy(isActual = true))
+                                } else {
+                                    db(context).habitDao().insert(
+                                        habit.copy(
+                                            uid = putHabitResponse.uid,
+                                            isActual = true
+                                        )
+                                    )
+                                }
                                 isInserted = true
                             }
                         } else {
@@ -72,8 +82,6 @@ class AddHabitViewModel : ViewModel() {
     }
 
     fun updateItem(item: Habit, context: Context) {
-        viewModelScope.launch {
-            db(context).habitDao().update(convertor.map(item))
-        }
+        addHabit(convertor.map(item), context)
     }
 }
