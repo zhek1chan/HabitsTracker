@@ -11,6 +11,7 @@ import com.example.habitstracker.data.db.HabitMapper
 import com.example.habitstracker.data.network.DoubletappApi
 import com.example.habitstracker.data.network.HabitEntityMapper
 import com.example.habitstracker.domain.models.Habit
+import com.example.habitstracker.domain.models.Uid
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -21,9 +22,10 @@ class AddHabitViewModel : ViewModel() {
     private val db = AppDataBase
     private val convertor = HabitMapper()
     private val convertorEntity = HabitEntityMapper()
+
     fun deleteItem(item: Habit, context: Context) {
         viewModelScope.launch {
-            DoubletappApi.habitApiService.deleteHabit(item.uid)
+            //DoubletappApi.habitApiService.deleteHabit(Uid(item.uid)) - не работает метод DELETE у сервера Doubletapp
             db(context).habitDao().delete(item.id!!)
         }
     }

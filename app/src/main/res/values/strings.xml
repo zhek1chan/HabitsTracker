@@ -61,4 +61,6 @@
     <string name="nothing_found_error">Ничего не нашлось</string>
     <string name="error_synch">Не удалось получить данные с сервера</string>
     <string name="success">Данные синхронизированы успешно</string>
+    <string name="description_of_app">Приложение для отслеживания привычек</string>
+    <string name="me">Разработал: Ермолов Евгений</string>
 </resources>

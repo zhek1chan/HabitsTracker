@@ -1,5 +1,6 @@
 package com.example.habitstracker.data.network
 
+import com.example.habitstracker.domain.models.Uid
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -15,6 +16,6 @@ interface HabitApiService {
     @PUT("/api/habit")
     suspend fun putHabit(@Body habit: HabitWithoutEnum): Response<PutHabitResponse>
 
-    @HTTP(method = "DELETE", path = "/api/habit", hasBody = true)
-    suspend fun  deleteHabit(@Body uid: String)
+    @DELETE("/api/habit")
+    suspend fun deleteHabit(@Body id: Uid): Response<Unit>
 }

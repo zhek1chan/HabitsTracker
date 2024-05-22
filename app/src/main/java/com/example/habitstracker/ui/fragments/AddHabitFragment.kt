@@ -212,8 +212,10 @@ class AddHabitFragment(habit: Habit? = null) : Fragment() {
     }
 
     private fun deleteButton() {
+        setHabit()
         val deleteBtn = binding.deleteButton
         deleteBtn.setOnClickListener {
+            Log.d("AddHabitFragment", "Deleted habit id = $id")
             viewModel.deleteItem(newHabit, requireContext())
             findNavController().navigateUp()
         }
