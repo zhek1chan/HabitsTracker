@@ -1,4 +1,4 @@
-package com.example.habitstracker.ui.fragments
+package com.example.habitstracker.presentation.ui.fragments
 
 import android.app.Activity
 import android.os.Bundle
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.habitstracker.PageSelector
+import com.example.habitstracker.utils.PageSelector
 import com.example.habitstracker.R
 import com.example.habitstracker.databinding.FragmentHabitsBinding
 import com.example.habitstracker.domain.adapters.FragmentsAdapter

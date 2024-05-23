@@ -1,4 +1,4 @@
-package com.example.habitstracker.root
+package com.example.habitstracker.presentation.ui.activity
 
 import android.os.Bundle
 import android.view.MenuItem

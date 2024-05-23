@@ -1,4 +1,4 @@
-package com.example.habitstracker.ui.view_models
+package com.example.habitstracker.presentation.viewmodel
 
 import android.content.Context
 import android.util.Log
@@ -11,7 +11,6 @@ import com.example.habitstracker.data.db.HabitMapper
 import com.example.habitstracker.data.network.DoubletappApi
 import com.example.habitstracker.data.network.HabitEntityMapper
 import com.example.habitstracker.domain.models.Habit
-import com.example.habitstracker.domain.models.Uid
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

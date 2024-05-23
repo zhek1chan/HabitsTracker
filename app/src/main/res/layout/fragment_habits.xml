@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:background="@color/white"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.fragments.HabitsFragment">
+    tools:context=".presentation.ui.fragments.HabitsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

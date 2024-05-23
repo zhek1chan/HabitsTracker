@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.example.habitstracker.ui.fragments.ListFragment"
+        android:name="com.example.habitstracker.presentation.ui.fragments.ListFragment"
         android:label="MainActivity" >
         <action
             android:id="@+id/action_mainActivity_to_addHabitActivity"
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/addFragment"
-        android:name="com.example.habitstracker.ui.fragments.AddHabitFragment"
+        android:name="com.example.habitstracker.presentation.ui.fragments.AddHabitFragment"
         android:label="AddHabitActivity" >
         <action
             android:id="@+id/action_addHabitActivity_to_mainActivity"
@@ -33,11 +33,11 @@
     </fragment>
     <fragment
         android:id="@+id/infoFragment"
-        android:name="com.example.habitstracker.ui.fragments.InfoFragment"
+        android:name="com.example.habitstracker.presentation.ui.fragments.InfoFragment"
         android:label="InfoFragment" />
     <fragment
         android:id="@+id/habitsFragment"
-        android:name="com.example.habitstracker.ui.fragments.HabitsFragment"
+        android:name="com.example.habitstracker.presentation.ui.fragments.HabitsFragment"
         android:label="HabitsFragment" >
         <action
             android:id="@+id/action_habitsFragment_to_addFragment"
@@ -48,6 +48,6 @@
     </fragment>
     <fragment
         android:id="@+id/filterFragment"
-        android:name="com.example.habitstracker.ui.fragments.SearchFragment"
+        android:name="com.example.habitstracker.presentation.ui.fragments.SearchFragment"
         android:label="FilterFragment" />
 </navigation>

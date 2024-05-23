@@ -1,4 +1,4 @@
-package com.example.habitstracker.ui.fragments
+package com.example.habitstracker.presentation.ui.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -17,9 +17,9 @@ import com.example.habitstracker.R
 import com.example.habitstracker.databinding.FragmentSearchBinding
 import com.example.habitstracker.domain.models.Habit
 import com.example.habitstracker.domain.models.Type
-import com.example.habitstracker.ui.HabitsRVAdapter
-import com.example.habitstracker.ui.ListScreenState
-import com.example.habitstracker.ui.view_models.ListViewModel
+import com.example.habitstracker.presentation.HabitsRVAdapter
+import com.example.habitstracker.presentation.ListScreenState
+import com.example.habitstracker.presentation.viewmodel.ListViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import java.util.Collections.swap
 
