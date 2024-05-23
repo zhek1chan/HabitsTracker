@@ -19,7 +19,6 @@ class HabitsRVAdapter(private val habits: List<Habit>, private val clickListener
     }
 
     override fun onBindViewHolder(holder: HabitViewHolder, position: Int) {
-        Log.d("RV", "$habits")
         holder.bind(habits[position])
         holder.itemView.setOnClickListener {
             clickListener.onClick(habits[position])

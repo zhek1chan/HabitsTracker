@@ -9,9 +9,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:text="Приложение для отслеживания привычек"
+        android:text="@string/description_of_app"
         android:textSize="20sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:textColor="@color/black"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -20,5 +21,6 @@
         android:layout_marginTop="30dp"
         android:textSize="15sp"
         android:textStyle="bold"
-        android:text="Разработал: Ермолов Евгений" />
+        android:text="@string/me"
+        android:textColor="@color/black"/>
 </LinearLayout>

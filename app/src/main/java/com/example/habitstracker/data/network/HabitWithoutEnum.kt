@@ -1,17 +1,20 @@
-package com.example.habitstracker.domain.models
+package com.example.habitstracker.data.network
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Habit(
-    var id: Int?,
+data class HabitWithoutEnum(
+    var id: Int,
     var uid: String,
     var title: String,
     var description: String,
-    val type: Type,
-    val priority: Priority,
+    var type: Int,
+    var priority: Int,
     var color: Int,
     var frequency: Int,
     var count: Int,
+    var lastModified: Long,
+    var lastModifiedDateTime: String?,
+    var isActual: Boolean
 ) : Parcelable

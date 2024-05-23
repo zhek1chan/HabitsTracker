@@ -6,6 +6,7 @@ class HabitMapper {
     fun map(h: Habit): HabitEntity {
         return HabitEntity(
             h.id!!,
+            h.uid,
             h.title,
             h.description,
             h.type,
@@ -19,6 +20,7 @@ class HabitMapper {
     fun map(h: HabitEntity): Habit {
         return Habit(
             h.id,
+            h.uid,
             h.title,
             h.description,
             h.type,

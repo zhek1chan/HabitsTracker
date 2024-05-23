@@ -24,12 +24,11 @@ import com.example.habitstracker.domain.models.Habit
 import com.example.habitstracker.domain.models.Priority
 import com.example.habitstracker.domain.models.Type
 import com.example.habitstracker.ui.view_models.AddHabitViewModel
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 
 class AddHabitFragment(habit: Habit? = null) : Fragment() {
     private lateinit var binding: FragmentAddBinding
     private var id: Int? = habit?.id
+    private var uid: String? = habit?.uid
     private var selectedColor: Int? = habit?.color
     private var title: String? = habit?.title
     private var description: String? = habit?.description
@@ -38,7 +37,7 @@ class AddHabitFragment(habit: Habit? = null) : Fragment() {
     private var frequency: Int? = habit?.frequency
     private var count: Int? = habit?.count
     private lateinit var colorPickerDialog: AlertDialog
-    private var newHabit = Habit(0, "", "", Type.Bad, Priority.Low, 0, 0, 0)
+    private var newHabit = Habit(null, "","", "", Type.Bad, Priority.Low, 0, 0, 0)
     private val viewModel by viewModels<AddHabitViewModel>()
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,7 +55,7 @@ class AddHabitFragment(habit: Habit? = null) : Fragment() {
 
             Log.d("AddHabitFragment", "Change habit $h")
             id = h.id!!
-
+            uid = h.uid
             binding.editTextName.setText(h.title)
             title = h.title
 
@@ -198,6 +197,7 @@ class AddHabitFragment(habit: Habit? = null) : Fragment() {
                     viewModel.addItem(newHabit, requireContext())
                     Log.d("AddHabitFragment", "Inserted in db")
                 }
+                Log.d("AddHabitFragment", "$newHabit")
                 val navController = findNavController()
                 navController.navigateUp()
             }
@@ -212,9 +212,11 @@ class AddHabitFragment(habit: Habit? = null) : Fragment() {
     }
 
     private fun deleteButton() {
+        setHabit()
         val deleteBtn = binding.deleteButton
         deleteBtn.setOnClickListener {
-            viewModel.deleteItem(id!!, requireContext())
+            Log.d("AddHabitFragment", "Deleted habit id = $id")
+            viewModel.deleteItem(newHabit, requireContext())
             findNavController().navigateUp()
         }
     }
@@ -236,6 +238,7 @@ class AddHabitFragment(habit: Habit? = null) : Fragment() {
                 newHabit =
                     Habit(
                         0,
+                        "",
                         title!!,
                         description!!,
                         type!!,
@@ -248,6 +251,7 @@ class AddHabitFragment(habit: Habit? = null) : Fragment() {
                 newHabit =
                     Habit(
                         id,
+                        uid!!,
                         title!!,
                         description!!,
                         type!!,
