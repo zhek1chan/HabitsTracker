@@ -15,7 +15,7 @@ abstract class AppDataBase : RoomDatabase() {
 
     companion object {
         @Volatile
-        private var INSTANCE: AppDataBase? = null
+        var INSTANCE: AppDataBase? = null
         private var LOCK = Any()
         operator fun invoke(context: Context) = INSTANCE ?: synchronized(LOCK) {
             INSTANCE ?: buildDatabase(context).also {

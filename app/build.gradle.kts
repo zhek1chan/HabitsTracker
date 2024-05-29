@@ -42,6 +42,7 @@ android {
 
 }
 
+
 dependencies {
     implementation ("com.google.code.gson:gson:2.10.1")
     implementation("androidx.core:core-ktx:1.13.1")
@@ -67,4 +68,10 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.15.1")
     implementation ("com.squareup.okhttp3:okhttp:4.12.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    val daggerVersion = "2.48.1"
+    implementation ("com.google.dagger:dagger:$daggerVersion")
+    kapt ("com.google.dagger:dagger-compiler:$daggerVersion")
+    implementation ("com.google.dagger:dagger-android:$daggerVersion")
+    implementation ("com.google.dagger:dagger-android-support:$daggerVersion") // if you use the support libraries
+    kapt ("com.google.dagger:dagger-android-processor:$daggerVersion")
 }
