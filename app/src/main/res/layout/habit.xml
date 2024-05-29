@@ -37,46 +37,115 @@
                 android:background="@drawable/custom_shape">
 
                 <TextView
-                    android:id="@+id/habitName"
+                    android:id="@+id/name"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="center_vertical"
                     android:gravity="center"
                     android:textAlignment="center"
-                    android:rotation="90"
-                    android:text="TEST"
-                    android:textColor="@color/white"
-                    android:textSize="25sp"
+                    android:rotation="270"
+                    android:text="@string/name"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/habitConstraintLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="13dp">
+                android:layout_height="match_parent">
 
 
                 <TextView
-                    android:id="@+id/habitAbout"
+                    android:id="@+id/description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/black"
                     android:layout_marginTop="15dp"
-                    android:paddingEnd="32dp"
+                    android:textSize="18sp"
                     android:text="@string/info"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="HardcodedText,RtlSymmetry" />
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:textSize="18sp"
+                    android:text="@string/type"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="@id/description"
+                    app:layout_constraintTop_toTopOf="@id/description"/>
+
+                <TextView
+                    android:id="@+id/type_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/type"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="@+id/type"
+                    app:layout_constraintStart_toEndOf="@+id/type"
+                    app:layout_constraintTop_toTopOf="@+id/type" />
+
+                <TextView
+                    android:id="@+id/period"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:text="@string/period"
+                    app:layout_constraintStart_toStartOf="@id/type"
+                    app:layout_constraintTop_toTopOf="@id/type"/>
+
+                <TextView
+                    android:id="@+id/period_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textSize="18sp"
+                    android:text="@string/period"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="@+id/period"
+                    app:layout_constraintStart_toEndOf="@+id/period"
+                    app:layout_constraintTop_toTopOf="@+id/period" />
+
+                <TextView
+                    android:id="@+id/num_of_habit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:text="@string/num_of_habit_per"
+                    app:layout_constraintStart_toStartOf="@id/period"
+                    app:layout_constraintTop_toTopOf="@id/period"/>
+
+                <TextView
+                    android:id="@+id/numText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="8dp"
+                    android:textSize="18sp"
+                    android:text="@string/five"
+                    app:layout_constraintBottom_toBottomOf="@+id/num_of_habit"
+                    app:layout_constraintStart_toEndOf="@+id/num_of_habit"
+                    app:layout_constraintTop_toTopOf="@+id/num_of_habit" />
 
                 <TextView
                     android:id="@+id/priorityLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginBottom="7dp"
-                    android:text="@string/priority"
-                    android:textSize="15sp"
+                    android:text="@string/priprotet_with_double_dot"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
@@ -85,22 +154,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:text="@string/priority"
                     app:layout_constraintBottom_toBottomOf="@+id/priorityLabel"
                     app:layout_constraintStart_toEndOf="@+id/priorityLabel"
                     app:layout_constraintTop_toTopOf="@+id/priorityLabel" />
 
-                <TextView
-                    android:id="@+id/counter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
-                    android:layout_marginBottom="7dp"
-                    android:textColor="@color/black"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

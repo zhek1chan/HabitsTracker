@@ -7,19 +7,60 @@
     <string name="priority">Приоритет</string>
     <string name="info">Информация</string>
     <string name="choose_period">Укажите периодичность:</string>
-    <string name="choose_count">Укажите количество выполнений:</string>
+    <string name="choose_count">Укажите кол-во выполнений:</string>
     <string name="priority_head">Приоритет:</string>
     <string name="new_habit">Новая привычка</string>
     <string name="add">Добавить</string>
     <string name="example">aaaaaaaaaaaaaaaaaaaaaaa</string>
-    <string name="name">Название:</string>
+    <string name="name">Название :</string>
     <string name="cancel">Отменить</string>
     <string name="add_text">Add</string>
     <string name="description">Описание:</string>
     <string name="preference_file_key">key</string>
+    <string name="priprotet_with_double_dot">Приоритет:</string>
+    <string name="period">Период:</string>
+    <string name="num_of_habit_per">Кол-во повторений:</string>
+    <string name="your_habits">Ваши привычки:</string>
+    <string name="new_habit_creation">Создание новой привычки:</string>
+    <string name="list">Список</string>
+    <string name="add_name">Добавить</string>
+    <string name="info_screen_name">Информация</string>
+    <string name="main">Главная</string>
     <string-array name="habit_priorities">
         <item>Большой</item>
         <item>Средний</item>
-        <item>Маленький</item>
+        <item>Низкий</item>
     </string-array>
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+    <string name="habits">Привычки:</string>
+    <string name="good">Хорошие</string>
+    <string name="bad">Плохие</string>
+    <string name="no_habits">Вы ещё не добавили ни одной привычки</string>
+    <string name="save">Сохранить</string>
+    <string name="edit_habit">Измение привычки:</string>
+    <string name="delete">Удалить</string>
+    <string name="alert">Сначала заполните все поля!</string>
+    <string name="pick_color">Выберите цвет</string>
+    <string name="cancel_name">Отмена</string>
+    <string name="search">Поиск</string>
+    <string name="filters">Фильтры:</string>
+    <string name="sort_with_data">Сортировать по дате создания:</string>
+    <string name="search_by_name">Поиск по названию</string>
+    <string name="sort_by_new">Сортировать по дате: новые</string>
+    <string name="sort_by_old">Сортировать по дате: старые</string>
+    <string name="sort_by_regular">Частые</string>
+    <string name="sort_by_unregular">Редкие</string>
+    <string name="sort_by_type">Сортировать по типу:</string>
+    <string name="frequency_sort">Сортировать по частоте:</string>
+    <string name="apply">Применить</string>
+    <string name="error_no_filters">Вы не указали параметров фильтрации</string>
+    <string name="type_good">Хороший</string>
+    <string name="type_bad">Плохой</string>
+    <string name="five">5</string>
+    <string name="nothing_found_error">Ничего не нашлось</string>
+    <string name="error_synch">Не удалось получить данные с сервера</string>
+    <string name="success">Данные синхронизированы успешно</string>
+    <string name="description_of_app">Приложение для отслеживания привычек</string>
+    <string name="me">Разработал: Ермолов Евгений</string>
 </resources>
