@@ -1,4 +1,4 @@
-package com.example.habitstracker.ui.fragments
+package com.example.habitstracker.presentation.ui.fragments
 
 import android.graphics.Color
 import android.os.Bundle
@@ -23,7 +23,7 @@ import com.example.habitstracker.domain.color.GridSpacingItemDecoration
 import com.example.habitstracker.domain.models.Habit
 import com.example.habitstracker.domain.models.Priority
 import com.example.habitstracker.domain.models.Type
-import com.example.habitstracker.ui.view_models.AddHabitViewModel
+import com.example.habitstracker.presentation.viewmodel.AddHabitViewModel
 
 class AddHabitFragment(habit: Habit? = null) : Fragment() {
     private lateinit var binding: FragmentAddBinding

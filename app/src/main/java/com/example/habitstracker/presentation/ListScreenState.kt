@@ -1,4 +1,4 @@
-package com.example.habitstracker.ui
+package com.example.habitstracker.presentation
 
 import com.example.habitstracker.domain.models.Habit
 

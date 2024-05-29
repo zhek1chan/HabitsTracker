@@ -1,4 +1,4 @@
-package com.example.habitstracker.ui.view_models
+package com.example.habitstracker.presentation.viewmodel
 
 import android.content.Context
 import android.util.Log
@@ -12,7 +12,7 @@ import com.example.habitstracker.data.db.HabitEntity
 import com.example.habitstracker.data.db.HabitMapper
 import com.example.habitstracker.data.workers.ActualizeDatabaseWorker
 import com.example.habitstracker.domain.models.Habit
-import com.example.habitstracker.ui.ListScreenState
+import com.example.habitstracker.presentation.ListScreenState
 import kotlinx.coroutines.launch
 
 class ListViewModel : ViewModel() {

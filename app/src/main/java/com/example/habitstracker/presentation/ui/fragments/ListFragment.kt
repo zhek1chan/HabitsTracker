@@ -1,4 +1,4 @@
-package com.example.habitstracker.ui.fragments
+package com.example.habitstracker.presentation.ui.fragments
 
 
 import android.annotation.SuppressLint
@@ -7,19 +7,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.habitstracker.domain.models.Habit
-import com.example.habitstracker.ui.HabitsRVAdapter
+import com.example.habitstracker.presentation.HabitsRVAdapter
 import com.example.habitstracker.R
 import com.example.habitstracker.databinding.FragmentListBinding
 import com.example.habitstracker.domain.models.Type
-import com.example.habitstracker.ui.ListScreenState
-import com.example.habitstracker.ui.view_models.ListViewModel
+import com.example.habitstracker.presentation.ListScreenState
+import com.example.habitstracker.presentation.viewmodel.ListViewModel
 
 
 class ListFragment(private val check: Boolean) : Fragment() {

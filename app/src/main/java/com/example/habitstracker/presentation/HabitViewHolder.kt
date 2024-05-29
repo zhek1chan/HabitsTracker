@@ -1,4 +1,4 @@
-package com.example.habitstracker.ui
+package com.example.habitstracker.presentation
 
 import android.view.View
 import android.widget.TextView

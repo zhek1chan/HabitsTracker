@@ -1,6 +1,5 @@
 package com.example.habitstracker.ui.view_models
 
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
