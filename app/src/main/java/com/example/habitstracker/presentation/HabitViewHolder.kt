@@ -1,10 +1,12 @@
 package com.example.habitstracker.presentation
 
+import android.content.res.Resources
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat.getString
 import androidx.recyclerview.widget.RecyclerView
 import com.example.habitstracker.App
 import com.example.habitstracker.R
@@ -34,27 +36,27 @@ class HabitViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         button.setOnClickListener {
             counter += 1
             if ((counter >= num.text.toString().toInt()) && (view.type == Type.Bad)) {
-                val text = "Хватит это делать"
+                val text =  App.appContext.getString(R.string.stop_doing_it)
                 val duration = Toast.LENGTH_SHORT
 
                 val toast = Toast.makeText(App.appContext, text, duration)
                 toast.show()
             } else if ((counter < num.text.toString().toInt()) && (view.type == Type.Bad)) {
                 val left = num.text.toString().toInt() - counter
-                val text = "Можете выполнить ещё $left раз"
+                val text = App.appContext.getString(R.string.you_can_do_it_x_times, left)
                 val duration = Toast.LENGTH_SHORT
 
                 val toast = Toast.makeText(App.appContext, text, duration)
                 toast.show()
             } else if ((counter < num.text.toString().toInt()) && (view.type == Type.Good)) {
                 val left = num.text.toString().toInt() - counter
-                val text = "Стоит выполнить ещё $left раз"
+                val text =  App.appContext.getString(R.string.you_should_do_it_x_times, left)
                 val duration = Toast.LENGTH_SHORT
 
                 val toast = Toast.makeText(App.appContext, text, duration)
                 toast.show()
             } else if ((counter >= num.text.toString().toInt()) && (view.type == Type.Good)) {
-                val text = "You are breathtaking!"
+                val text =  App.appContext.getString(R.string.you_are_breathtaking)
                 val duration = Toast.LENGTH_SHORT
 
                 val toast = Toast.makeText(App.appContext, text, duration)
