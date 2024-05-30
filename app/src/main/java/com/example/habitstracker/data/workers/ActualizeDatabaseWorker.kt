@@ -23,7 +23,7 @@ class ActualizeDatabaseWorker(context: Context, params: WorkerParameters) :
     override suspend fun doWork(): Result {
         Log.d(TAG, "doWork: START")
 
-        return if (UpdateHabitsFromRemoteUseCase(Repository(AppDataBase.INSTANCE!!, DoubletappApi(), HabitMapper(), HabitEntityMapper()), Dispatchers.IO)
+        return if (UpdateHabitsFromRemoteUseCase(Repository(AppDataBase.getInstance(applicationContext), DoubletappApi(), HabitMapper(), HabitEntityMapper()), Dispatchers.IO)
                 .updateHabitsFromRemote()) {
             Result.success()
         } else {

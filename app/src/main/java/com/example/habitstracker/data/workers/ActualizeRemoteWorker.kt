@@ -26,7 +26,7 @@ class ActualizeRemoteWorker(context: Context, workerParameters: WorkerParameters
         var needRetry = false
         try {
             val repository = Repository(
-                AppDataBase.INSTANCE!!,
+                AppDataBase.getInstance(applicationContext),
                 DoubletappApi(),
                 HabitMapper(),
                 HabitEntityMapper()
@@ -41,7 +41,7 @@ class ActualizeRemoteWorker(context: Context, workerParameters: WorkerParameters
                         .putHabitToRemote(entity)?.let { uid ->
                             UpdateHabitUseCase(repository, Dispatchers.IO)
                                 .updateHabit(entity.copy(uid = uid, isActual = true))
-                        } ?: run { needRetry = true }
+                        }?: run { needRetry = true }
                 } catch (e: Exception) {
                     Log.e(TAG, "ActualizeRemote ERROR!", e)
                     needRetry = true

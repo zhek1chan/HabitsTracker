@@ -34,6 +34,7 @@ class DataModule {
             "habits_database"
         )
             .fallbackToDestructiveMigration()
+            .allowMainThreadQueries()
             .build()
     }
 

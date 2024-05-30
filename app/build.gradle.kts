@@ -2,7 +2,11 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
-    id ("kotlin-kapt")
+    id("kotlin-kapt")
+}
+
+kapt {
+    generateStubs = true
 }
 
 android {
@@ -15,7 +19,6 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -70,8 +73,11 @@ dependencies {
     implementation ("com.squareup.okhttp3:logging-interceptor:4.12.0")
     val daggerVersion = "2.48.1"
     implementation ("com.google.dagger:dagger:$daggerVersion")
-    kapt ("com.google.dagger:dagger-compiler:$daggerVersion")
     implementation ("com.google.dagger:dagger-android:$daggerVersion")
-    implementation ("com.google.dagger:dagger-android-support:$daggerVersion") // if you use the support libraries
+    implementation ("com.google.dagger:dagger-android-support:$daggerVersion")
+    kapt ("com.google.dagger:dagger-compiler:$daggerVersion")
     kapt ("com.google.dagger:dagger-android-processor:$daggerVersion")
+    annotationProcessor ("com.google.dagger:dagger-compiler:$daggerVersion")
+    compileOnly ("javax.annotation:jsr250-api:1.0")
+    implementation ("javax.inject:javax.inject:1")
 }

@@ -1,5 +1,6 @@
-package com.example.habitstracker.ui.view_models
+package com.example.habitstracker.presentation.viewmodel
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -8,7 +9,6 @@ import com.example.habitstracker.App
 import com.example.habitstracker.data.db.AppDataBase
 import com.example.habitstracker.data.db.HabitEntity
 import com.example.habitstracker.data.db.HabitMapper
-import com.example.habitstracker.data.network.HabitEntityMapper
 import com.example.habitstracker.domain.models.Habit
 import com.example.habitstracker.domain.usecase.GetHabitByIdUseCase
 import com.example.habitstracker.domain.usecase.InsertHabitUseCase
@@ -19,8 +19,6 @@ import kotlinx.coroutines.launch
 
 class AddHabitViewModel(
     private val insertUseCase: InsertHabitUseCase,
-    private val updateUseCase: UpdateHabitUseCase,
-    private val getByIdUseCase: GetHabitByIdUseCase,
     private val putUseCase: PutHabitToRemoteUseCase
 ) : ViewModel() {
 
@@ -30,7 +28,7 @@ class AddHabitViewModel(
     fun deleteItem(item: Habit, context: Context) {
         viewModelScope.launch {
             //DoubletappApi.habitApiService.deleteHabit(Uid(item.uid)) - не работает метод DELETE у сервера Doubletapp
-            db(context).habitDao().delete(item.id!!)
+            //db(context).habitDao().delete(item.id!!)
         }
     }
 
@@ -40,19 +38,20 @@ class AddHabitViewModel(
 
     private fun addHabit(habit: HabitEntity) {
         viewModelScope.launch {
-            delay(2000L)
             var isInserted = false
             try {
                 putUseCase
                     .putHabitToRemote(habit)?.let { uid ->
                         insertUseCase.insertHabit(habit.copy(uid = uid, isActual = true))
+                        Log.d("AddHabitViewModel", "Saved in db")
                         isInserted = true
                     }
             } catch (e: Exception) {
-                Log.e(TAG, "INSERT ERROR!", e)
+                Log.d(TAG, "INSERT ERROR!", e)
             }
             if (!isInserted) {
                 insertUseCase.insertHabit(habit.copy(isActual = false))
+                Log.d("AddHabitViewModel", "Saved in db")
                 App().actualizeRemote()
             }
         }

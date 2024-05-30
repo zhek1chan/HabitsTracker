@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface HabitsRepository {
 
-    fun getAllHabits(): Flow<List<Habit>>
+    fun getAllHabits(): Flow<List<HabitEntity>>
 
     suspend fun getHabitById(id: Int): Habit
 

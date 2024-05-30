@@ -26,13 +26,8 @@ class Repository(
         habitsDao = database.habitDao()
     }
 
-    override fun getAllHabits(): Flow<List<Habit>> = flow {
-        val habitsList = habitsDao.getAll()
-        var habitsListMapped = mutableListOf<Habit>()
-        habitsList.forEach {
-            habitsListMapped.add(mapper.map(it))
-        }
-        emit(habitsListMapped)
+    override fun getAllHabits(): Flow<List<HabitEntity>> = flow {
+        emit(habitsDao.getAll())
     }
 
     override suspend fun getHabitById(id: Int): Habit {
@@ -40,7 +35,7 @@ class Repository(
 
     }
 
-    override suspend fun insertHabit(habit: Habit) = habitsDao.insert(mapper.map(habit))
+    override suspend fun insertHabit(habit: HabitEntity) = habitsDao.insert(habit)
 
     override suspend fun updateHabit(habit: HabitEntity) = habitsDao.update(habit)
 
@@ -145,7 +140,12 @@ class Repository(
     }
 
     override suspend fun getNotActualHabits(): List<Habit> {
-        TODO("Not yet implemented")
+        val habits = habitsDao.getNotActualHabits()
+        var mapped = mutableListOf<Habit>()
+        habits.forEach {
+            mapped.add(HabitMapper().map(it))
+        }
+        return mapped
     }
 
     companion object {

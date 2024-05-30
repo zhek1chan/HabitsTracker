@@ -1,7 +1,9 @@
 package com.example.habitstracker.di
 
 import com.example.habitstracker.domain.repository.HabitsRepository
+import com.example.habitstracker.domain.usecase.GetAllHabitsUseCase
 import com.example.habitstracker.domain.usecase.GetNotActualHabitsUseCase
+import com.example.habitstracker.domain.usecase.InsertHabitUseCase
 import com.example.habitstracker.domain.usecase.PutHabitToRemoteUseCase
 import com.example.habitstracker.domain.usecase.UpdateHabitUseCase
 import com.example.habitstracker.domain.usecase.UpdateHabitsFromRemoteUseCase
@@ -14,9 +16,9 @@ class DomainModule(
     private val habitsRepository: HabitsRepository,
     private val dispatcher: CoroutineDispatcher
 ) {
-    /*    @Provides
-        fun provideGetAllHabitsUseCase() =
-            GetAllHabitsUseCase(habitsRepository)*/
+    @Provides
+    fun provideGetAllHabitsUseCase() =
+        GetAllHabitsUseCase(habitsRepository)
 
     @Provides
     fun provideGetNotActualHabitsUseCase() =
@@ -35,4 +37,7 @@ class DomainModule(
     fun provideUpdateHabitUseCase() =
         UpdateHabitUseCase(habitsRepository, dispatcher)
 
+    @Provides
+    fun provideInsertHabitUseCase() =
+        InsertHabitUseCase(habitsRepository, dispatcher)
 }

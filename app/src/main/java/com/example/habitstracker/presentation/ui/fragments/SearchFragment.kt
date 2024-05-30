@@ -47,7 +47,7 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
-        viewModel.fillData(requireContext(), this)
+        viewModel.fillData(this)
         viewModel.observeState().observe(viewLifecycleOwner) {
             render(it)
         }
@@ -273,7 +273,7 @@ class SearchFragment : Fragment() {
         binding.chooseType.clearCheck()
         binding.chooseFrequency.clearCheck()
         binding.editTextName.text.clear()
-        viewModel.fillData(requireContext(), this)
+        viewModel.fillData(this)
         viewModel.observeState().observe(viewLifecycleOwner) {
             render(it)
         }
