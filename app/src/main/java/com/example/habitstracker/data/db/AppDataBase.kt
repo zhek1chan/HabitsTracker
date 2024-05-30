@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import kotlinx.coroutines.InternalCoroutinesApi
 
 @Database(
     version = 1,
@@ -16,18 +17,25 @@ abstract class AppDataBase : RoomDatabase() {
     companion object {
         @Volatile
         private var INSTANCE: AppDataBase? = null
-        private var LOCK = Any()
-        operator fun invoke(context: Context) = INSTANCE ?: synchronized(LOCK) {
-            INSTANCE ?: buildDatabase(context).also {
-                INSTANCE = it
+
+
+        @OptIn(InternalCoroutinesApi::class)
+        fun getInstance(context: Context) : AppDataBase {
+            kotlinx.coroutines.internal.synchronized(this) {
+                var instance = INSTANCE
+                if (instance == null) {
+                    instance = Room.databaseBuilder(
+                        context.applicationContext,
+                        AppDataBase::class.java,
+                        "habits_database"
+                    )
+                        .fallbackToDestructiveMigration()
+                        .allowMainThreadQueries()
+                        .build()
+                    INSTANCE = instance
+                }
+                return instance
             }
         }
-
-        private fun buildDatabase(context: Context): AppDataBase =
-            Room.databaseBuilder(
-                context.applicationContext, AppDataBase::class.java, "app-database"
-            )
-                .allowMainThreadQueries()
-                .build()
     }
 }

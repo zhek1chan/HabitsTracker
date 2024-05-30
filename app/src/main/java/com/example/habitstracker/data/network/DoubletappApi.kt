@@ -8,9 +8,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object DoubletappApi {
-    private const val BASE_URL = "https://droid-test-server.doubletapp.ru/"
-    private const val AUTH_TOKEN = "b2ea135e-b4cf-4ee9-8523-b2b71a68e7e0"
+class DoubletappApi {
 
     private fun getRetrofit(): Retrofit {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
@@ -46,5 +44,10 @@ object DoubletappApi {
 
     val habitApiService: HabitApiService by lazy {
         getRetrofit().create(HabitApiService::class.java)
+    }
+
+    companion object {
+        private const val BASE_URL = "https://droid-test-server.doubletapp.ru/"
+        private const val AUTH_TOKEN = "b2ea135e-b4cf-4ee9-8523-b2b71a68e7e0"
     }
 }

@@ -17,7 +17,7 @@
         android:theme="@style/Theme.HabitsTracker"
         tools:targetApi="31">
         <activity
-            android:name=".root.RootActivity"
+            android:name=".presentation.ui.activity.RootActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing">

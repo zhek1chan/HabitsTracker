@@ -2,7 +2,7 @@ package com.example.habitstracker.domain.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.habitstracker.ui.fragments.ListFragment
+import com.example.habitstracker.presentation.ui.fragments.ListFragment
 
 class FragmentsAdapter(
     parentFragment: Fragment

@@ -2,7 +2,11 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
-    id ("kotlin-kapt")
+    id("kotlin-kapt")
+}
+
+kapt {
+    generateStubs = true
 }
 
 android {
@@ -15,7 +19,6 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -40,7 +43,12 @@ android {
         jvmTarget = "1.8"
     }
 
+    packagingOptions {
+        resources.excludes.add("META-INF/*")
+    }
+
 }
+
 
 dependencies {
     implementation ("com.google.code.gson:gson:2.10.1")
@@ -52,6 +60,7 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0")
     implementation("androidx.work:work-runtime-ktx:2.9.0")
+    implementation("androidx.databinding:databinding-compiler:8.4.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -67,4 +76,13 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.15.1")
     implementation ("com.squareup.okhttp3:okhttp:4.12.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    val daggerVersion = "2.48.1"
+    implementation ("com.google.dagger:dagger:$daggerVersion")
+    implementation ("com.google.dagger:dagger-android:$daggerVersion")
+    implementation ("com.google.dagger:dagger-android-support:$daggerVersion")
+    kapt ("com.google.dagger:dagger-compiler:$daggerVersion")
+    kapt ("com.google.dagger:dagger-android-processor:$daggerVersion")
+    annotationProcessor ("com.google.dagger:dagger-compiler:$daggerVersion")
+    compileOnly ("javax.annotation:jsr250-api:1.0")
+    implementation ("javax.inject:javax.inject:1")
 }

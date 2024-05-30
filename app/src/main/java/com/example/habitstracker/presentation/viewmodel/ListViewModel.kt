@@ -1,30 +1,34 @@
-package com.example.habitstracker.ui.view_models
+package com.example.habitstracker.presentation.viewmodel
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.habitstracker.data.db.AppDataBase
 import com.example.habitstracker.data.db.HabitEntity
 import com.example.habitstracker.data.db.HabitMapper
 import com.example.habitstracker.data.workers.ActualizeDatabaseWorker
 import com.example.habitstracker.domain.models.Habit
-import com.example.habitstracker.ui.ListScreenState
+import com.example.habitstracker.domain.usecase.GetAllHabitsUseCase
+import com.example.habitstracker.domain.usecase.UpdateHabitsFromRemoteUseCase
+import com.example.habitstracker.presentation.ListScreenState
 import kotlinx.coroutines.launch
 
-class ListViewModel : ViewModel() {
+class ListViewModel(
+    private val getAllHabitsUseCase: GetAllHabitsUseCase,
+    private val updateHabitsFromRemoteUseCase: UpdateHabitsFromRemoteUseCase
+) : ViewModel() {
 
-    private val db = AppDataBase
     private val convertor = HabitMapper()
     private val stateLiveData = MutableLiveData<ListScreenState>()
     fun observeState(): LiveData<ListScreenState> = stateLiveData
-    fun fillData(context: Context, lifeCycleOwner: LifecycleOwner) {
+    fun fillData(lifeCycleOwner: LifecycleOwner) {
         val list: MutableList<Habit> = mutableListOf()
-        val liveDataDb: LiveData<List<HabitEntity>> = db(context).habitDao().getAll()
-        updateHabitsFromRemote(context)
+        val liveDataDb: LiveData<List<HabitEntity>> =
+            getAllHabitsUseCase.getAllHabits().asLiveData()
+        updateHabitsFromRemote()
         liveDataDb.observe(lifeCycleOwner) { it ->
             it.forEach {
                 val item = convertor.map(it)
@@ -53,13 +57,13 @@ class ListViewModel : ViewModel() {
         }
     }
 
-    private fun updateHabitsFromRemote(context: Context) {
+    private fun updateHabitsFromRemote() {
         viewModelScope.launch {
             stateLiveData.postValue(ListScreenState.Loading)
 
             Log.d("ListVM", "Update habits from server")
 
-            if (ActualizeDatabaseWorker.updateHabitsFromRemote(context)) {
+            if (updateHabitsFromRemoteUseCase.updateHabitsFromRemote()) {
                 stateLiveData.postValue(ListScreenState.Success)
             } else {
                 stateLiveData.postValue(ListScreenState.Error(null, "Load error"))
