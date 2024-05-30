@@ -9,51 +9,46 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.example.habitstracker.App
 import com.example.habitstracker.data.db.AppDataBase
+import com.example.habitstracker.data.db.HabitMapper
 import com.example.habitstracker.data.network.DoubletappApi
 import com.example.habitstracker.data.network.HabitEntityMapper
+import com.example.habitstracker.data.repository.Repository
+import com.example.habitstracker.domain.usecase.GetNotActualHabitsUseCase
+import com.example.habitstracker.domain.usecase.PutHabitToRemoteUseCase
+import com.example.habitstracker.domain.usecase.UpdateHabitUseCase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
 
-class ActualizeRemoteWorker(private val context: Context, workerParameters: WorkerParameters) :
+class ActualizeRemoteWorker(context: Context, workerParameters: WorkerParameters) :
     CoroutineWorker(context, workerParameters) {
-    private val db = AppDataBase
-    private val convertor = HabitEntityMapper()
     override suspend fun doWork(): Result {
         Log.d(TAG, "doWork: START")
         var needRetry = false
-
         try {
-            val notActualHabits = withContext(Dispatchers.IO) {
-                Log.d("CHET HUINYA", "KAKAYATO")
-                db(context).habitDao().getNotActualHabits()
-            }
+            val repository = Repository(
+                AppDataBase.getInstance(applicationContext),
+                DoubletappApi(),
+                HabitMapper(),
+                HabitEntityMapper()
+            )
+            val notActualHabits = GetNotActualHabitsUseCase(repository, Dispatchers.IO)
+                .getNotActualHabits()
 
             notActualHabits.forEach { habit ->
                 try {
-                    val response = DoubletappApi.habitApiService.putHabit(convertor.map(habit))
-
-                    if (response.isSuccessful) {
-                        val putHabitResponse = response.body()
-
-                        putHabitResponse?.let {
-                            db(context).habitDao()
-                                .update(habit.copy(uid = putHabitResponse.uid, isActual = true))
-                        }
-                    } else {
-                        response.errorBody()?.let {
-                            throw Exception("Ошибка! Код: ${response.code()}, Текст: ${response.message()}, $response")
-                        } ?: kotlin.run {
-                            throw Exception("Ошибка! Код: ${response.code()}")
-                        }
-                    }
+                    val entity = HabitMapper().map(habit)
+                    PutHabitToRemoteUseCase(repository, Dispatchers.IO)
+                        .putHabitToRemote(entity)?.let { uid ->
+                            UpdateHabitUseCase(repository, Dispatchers.IO)
+                                .updateHabit(entity.copy(uid = uid, isActual = true))
+                        }?: run { needRetry = true }
                 } catch (e: Exception) {
                     Log.e(TAG, "ActualizeRemote ERROR!", e)
                     needRetry = true
                 }
             }
         } catch (e: Exception) {
-            Log.d(TAG, "ActualizeRemote ERROR!", e)
+            Log.e(TAG, "ActualizeRemote ERROR!", e)
             needRetry = true
         }
 
@@ -70,16 +65,14 @@ class ActualizeRemoteWorker(private val context: Context, workerParameters: Work
 
         fun actualizeRemote() {
             Log.d(TAG, "newTryActualizeRemote: START Plan Next Work")
-
             val actualizeRemoteWorkRequest = OneTimeWorkRequestBuilder<ActualizeRemoteWorker>()
                 .setInitialDelay(defaultDelay(), TimeUnit.MILLISECONDS)
                 .build()
-
             Log.d(TAG, "newTryActualizeRemote: enqueue Work!")
 
             WorkManager.getInstance(App())
                 .beginUniqueWork(
-                    "actualizing_remote",
+                    "actualize_remote_work",
                     ExistingWorkPolicy.REPLACE,
                     actualizeRemoteWorkRequest
                 )

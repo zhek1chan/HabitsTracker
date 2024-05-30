@@ -63,4 +63,9 @@
     <string name="success">Данные синхронизированы успешно</string>
     <string name="description_of_app">Приложение для отслеживания привычек</string>
     <string name="me">Разработал: Ермолов Евгений</string>
+    <string name="button_done">Отметить выполненной</string>
+    <string name="stop_doing_it">Хватит это делать</string>
+    <string name="you_can_do_it_x_times">Можете выполнить ещё %d раз</string>
+    <string name="you_should_do_it_x_times">Стоит выполнить ещё %d раз</string>
+    <string name="you_are_breathtaking">You are breathtaking!</string>
 </resources>

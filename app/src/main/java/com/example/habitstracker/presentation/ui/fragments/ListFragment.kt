@@ -1,4 +1,4 @@
-package com.example.habitstracker.ui.fragments
+package com.example.habitstracker.presentation.ui.fragments
 
 
 import android.annotation.SuppressLint
@@ -13,20 +13,28 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.habitstracker.domain.models.Habit
-import com.example.habitstracker.ui.HabitsRVAdapter
+import com.example.habitstracker.App
 import com.example.habitstracker.R
 import com.example.habitstracker.databinding.FragmentListBinding
+import com.example.habitstracker.domain.models.Habit
 import com.example.habitstracker.domain.models.Type
-import com.example.habitstracker.ui.ListScreenState
-import com.example.habitstracker.ui.view_models.ListViewModel
+import com.example.habitstracker.presentation.HabitsRVAdapter
+import com.example.habitstracker.presentation.ListScreenState
+import com.example.habitstracker.presentation.viewmodel.ListViewModel
+import com.example.habitstracker.presentation.viewmodel.ListViewModelFactory
 
 
 class ListFragment(private val check: Boolean) : Fragment() {
     private lateinit var binding: FragmentListBinding
     private lateinit var recyclerView: RecyclerView
     private var habitsList: MutableList<Habit> = mutableListOf()
-    private val viewModel by viewModels<ListViewModel>()
+    private val viewModel: ListViewModel by viewModels {
+        ListViewModelFactory(
+            (requireActivity().application as App).appComponent.getAllHabitsUseCase(),
+            (requireActivity().application as App).appComponent.getUpdateHabitsFromRemoteUseCase(),
+        )
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,7 +55,7 @@ class ListFragment(private val check: Boolean) : Fragment() {
         }
         recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
-        viewModel.fillData(requireContext(), this)
+        viewModel.fillData(this)
         viewModel.observeState().observe(viewLifecycleOwner) {
             render(it)
         }
@@ -65,8 +73,8 @@ class ListFragment(private val check: Boolean) : Fragment() {
     private fun render(state: ListScreenState) {
         when (state) {
             is ListScreenState.Loading -> showProgressBar()
-            is ListScreenState.Error -> showToast(false)
-            is ListScreenState.Success -> showToast(true)
+            is ListScreenState.Error -> result(false)
+            is ListScreenState.Success -> result(true)
             is ListScreenState.Data -> getData(state.data)
             is ListScreenState.NoHabitsAdded -> showEmpty()
         }
@@ -76,17 +84,15 @@ class ListFragment(private val check: Boolean) : Fragment() {
         binding.loadingIndicator.visibility = View.VISIBLE
     }
 
-    private fun showToast(b: Boolean) {
+    private fun result(b: Boolean) {
         binding.loadingIndicator.visibility = View.GONE
-        /*val text = if (b == false) {
-            resources.getString(R.string.error_synch)
-        } else {
-            resources.getString(R.string.success)
-        }
-        val duration = Toast.LENGTH_SHORT
+        if (!b) {
+            val text = R.string.error_synch
+            val duration = Toast.LENGTH_SHORT
 
-        val toast = Toast.makeText(requireContext(), text, duration)
-        toast.show()*/
+            val toast = Toast.makeText(requireActivity(), text, duration)
+            toast.show()
+        }
     }
 
     private fun showEmpty() {
@@ -99,7 +105,7 @@ class ListFragment(private val check: Boolean) : Fragment() {
     override fun onResume() {
         super.onResume()
         habitsList.clear()
-        viewModel.fillData(requireContext(), this)
+        viewModel.fillData(this)
         viewModel.observeState().observe(viewLifecycleOwner) {
             render(it)
         }

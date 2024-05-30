@@ -1,4 +1,4 @@
-package com.example.habitstracker.ui.fragments
+package com.example.habitstracker.presentation.ui.fragments
 
 import android.graphics.Color
 import android.os.Bundle
@@ -16,6 +16,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.habitstracker.App
 import com.example.habitstracker.R
 import com.example.habitstracker.databinding.FragmentAddBinding
 import com.example.habitstracker.domain.color.ColorAdapter
@@ -23,7 +24,8 @@ import com.example.habitstracker.domain.color.GridSpacingItemDecoration
 import com.example.habitstracker.domain.models.Habit
 import com.example.habitstracker.domain.models.Priority
 import com.example.habitstracker.domain.models.Type
-import com.example.habitstracker.ui.view_models.AddHabitViewModel
+import com.example.habitstracker.presentation.viewmodel.AddHabitViewModel
+import com.example.habitstracker.presentation.viewmodel.AddHabitViewModelFactory
 
 class AddHabitFragment(habit: Habit? = null) : Fragment() {
     private lateinit var binding: FragmentAddBinding
@@ -37,8 +39,14 @@ class AddHabitFragment(habit: Habit? = null) : Fragment() {
     private var frequency: Int? = habit?.frequency
     private var count: Int? = habit?.count
     private lateinit var colorPickerDialog: AlertDialog
-    private var newHabit = Habit(null, "","", "", Type.Bad, Priority.Low, 0, 0, 0)
-    private val viewModel by viewModels<AddHabitViewModel>()
+    private var newHabit = Habit(null, "", "", "", Type.Bad, Priority.Low, 0, 0, 0)
+    private val viewModel: AddHabitViewModel by viewModels {
+        AddHabitViewModelFactory(
+            (requireActivity().application as App).appComponent.getInsertHabitUseCase(),
+            (requireActivity().application as App).appComponent.getPutHabitToRemoteUseCase()
+        )
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -191,10 +199,10 @@ class AddHabitFragment(habit: Habit? = null) : Fragment() {
         okBtn.setOnClickListener {
             if (setHabit()) {
                 if ((id != 0) && (id != null)) {
-                    viewModel.updateItem(newHabit, requireContext())
+                    viewModel.updateItem(newHabit)
                     Log.d("AddHabitFragment", "Changed in db")
                 } else {
-                    viewModel.addItem(newHabit, requireContext())
+                    viewModel.addItem(newHabit)
                     Log.d("AddHabitFragment", "Inserted in db")
                 }
                 Log.d("AddHabitFragment", "$newHabit")
