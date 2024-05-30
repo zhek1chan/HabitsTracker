@@ -1,11 +1,15 @@
 package com.example.habitstracker.presentation
 
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.example.habitstracker.domain.models.Habit
+import com.example.habitstracker.App
 import com.example.habitstracker.R
+import com.example.habitstracker.domain.models.Habit
+import com.example.habitstracker.domain.models.Type
 
 class HabitViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -16,6 +20,8 @@ class HabitViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val type: TextView = view.findViewById(R.id.type_text)
     private val period: TextView = view.findViewById(R.id.period_text)
     private val num: TextView = view.findViewById(R.id.numText)
+    private val button: Button = view.findViewById(R.id.button_done)
+    private var counter: Int = 0
 
     fun bind(view: Habit) {
         container.setBackgroundColor((view.color))
@@ -25,5 +31,35 @@ class HabitViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         type.text = view.type.value
         period.text = view.frequency.toString()
         num.text = view.count.toString()
+        button.setOnClickListener {
+            counter += 1
+            if ((counter >= num.text.toString().toInt()) && (view.type == Type.Bad)) {
+                val text = "Хватит это делать"
+                val duration = Toast.LENGTH_SHORT
+
+                val toast = Toast.makeText(App.appContext, text, duration)
+                toast.show()
+            } else if ((counter < num.text.toString().toInt()) && (view.type == Type.Bad)) {
+                val left = num.text.toString().toInt() - counter
+                val text = "Можете выполнить ещё $left раз"
+                val duration = Toast.LENGTH_SHORT
+
+                val toast = Toast.makeText(App.appContext, text, duration)
+                toast.show()
+            } else if ((counter < num.text.toString().toInt()) && (view.type == Type.Good)) {
+                val left = num.text.toString().toInt() - counter
+                val text = "Стоит выполнить ещё $left раз"
+                val duration = Toast.LENGTH_SHORT
+
+                val toast = Toast.makeText(App.appContext, text, duration)
+                toast.show()
+            } else if ((counter >= num.text.toString().toInt()) && (view.type == Type.Good)) {
+                val text = "You are breathtaking!"
+                val duration = Toast.LENGTH_SHORT
+
+                val toast = Toast.makeText(App.appContext, text, duration)
+                toast.show()
+            }
+        }
     }
 }

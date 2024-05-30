@@ -1,6 +1,7 @@
 package com.example.habitstracker
 
 import android.app.Application
+import android.content.Context
 import com.example.habitstracker.data.db.AppDataBase
 import com.example.habitstracker.data.db.HabitMapper
 import com.example.habitstracker.data.network.DoubletappApi
@@ -21,7 +22,7 @@ class App: Application() {
 
     override fun onCreate() {
         super.onCreate()
-
+        appContext = applicationContext
         appComponent = DaggerAppComponent
             .builder()
             .contextModule(ContextModule(this))
@@ -44,5 +45,11 @@ class App: Application() {
 
     fun actualizeRemote() {
         ActualizeRemoteWorker.actualizeRemote()
+    }
+
+    companion object {
+
+        lateinit  var appContext: Context
+
     }
 }

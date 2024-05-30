@@ -43,6 +43,10 @@ android {
         jvmTarget = "1.8"
     }
 
+    packagingOptions {
+        resources.excludes.add("META-INF/*")
+    }
+
 }
 
 
@@ -56,6 +60,7 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0")
     implementation("androidx.work:work-runtime-ktx:2.9.0")
+    implementation("androidx.databinding:databinding-compiler:8.4.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
