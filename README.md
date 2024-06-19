@@ -20,13 +20,15 @@
 - Выгрузка привычек на сервер Doubletapp
 - Синхронизирование данных с сервером Doubletapp
 - Поиск и фильтрация привычек
-
+p.s: Не работает удаление привычек из-за нерабочего метода Delete у api Doubletapp
 ## Примеры использования
 
-
+[![Example usage](http://i3.ytimg.com/vi/mSNWFp66Gbk/hqdefault.jpg)](https://youtube.com/shorts/OHcaW4uegwg?feature=share "Example usage")
+<br>
+<a>Нажмите на картинку, чтобы посмотреть видео</a>
 
 ## Установка
 [<img src="https://raw.githubusercontent.com/mateusz-bak/openreads/master/doc/github/get-it-on-github.png"
     alt="Get it on GitHub"
-    height="80">]()
+    height="80">](https://github.com/zhek1chan/HabitsTracker/releases/tag/v1.0.0)
 
