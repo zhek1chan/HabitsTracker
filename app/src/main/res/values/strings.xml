@@ -68,4 +68,5 @@
     <string name="you_can_do_it_x_times">Можете выполнить ещё %d раз</string>
     <string name="you_should_do_it_x_times">Стоит выполнить ещё %d раз</string>
     <string name="you_are_breathtaking">You are breathtaking!</string>
+    <string name="error_getting_from_serv">Произошла ошибка, получить данные не удалось</string>
 </resources>

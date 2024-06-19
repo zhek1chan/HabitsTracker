@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.habitstracker.App
 import com.example.habitstracker.R
 import com.example.habitstracker.databinding.FragmentSearchBinding
 import com.example.habitstracker.domain.models.Habit
@@ -20,6 +21,7 @@ import com.example.habitstracker.domain.models.Type
 import com.example.habitstracker.presentation.HabitsRVAdapter
 import com.example.habitstracker.presentation.ListScreenState
 import com.example.habitstracker.presentation.viewmodel.ListViewModel
+import com.example.habitstracker.presentation.viewmodel.ListViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import java.util.Collections.swap
 
@@ -29,7 +31,12 @@ class SearchFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private var habitsList: MutableList<Habit> = mutableListOf()
     private var sortedList: MutableList<Habit> = mutableListOf()
-    private val viewModel by viewModels<ListViewModel>()
+    private val viewModel: ListViewModel by viewModels {
+        ListViewModelFactory(
+            (requireActivity().application as App).appComponent.getAllHabitsUseCase(),
+            (requireActivity().application as App).appComponent.getUpdateHabitsFromRemoteUseCase(),
+        )
+    }
     private var sortByOld: Boolean? = null
     private var sortByRegular: Boolean? = null
     private var sortByBad: Boolean? = null
@@ -139,11 +146,24 @@ class SearchFragment : Fragment() {
         when (state) {
             is ListScreenState.Data -> getData(state.data)
             is ListScreenState.NoHabitsAdded -> showEmpty()
-            else -> showEmpty()
+            is ListScreenState.Error -> showErrorLoading()
+            is ListScreenState.Success -> success()
+            is ListScreenState.Loading -> success()
         }
     }
 
+    private fun success(){
+        Log.d("SearchFragment", "Success in synchronizing data")
+    }
+
+    private fun showErrorLoading() {
+        binding.noHabits.text = getString(R.string.error_getting_from_serv)
+        binding.noHabits.visibility = View.VISIBLE
+        binding.recyclerView.visibility = View.GONE
+    }
+
     private fun showEmpty() {
+        binding.noHabits.text = getString(R.string.no_habits)
         binding.noHabits.visibility = View.VISIBLE
         binding.recyclerView.visibility = View.GONE
     }
