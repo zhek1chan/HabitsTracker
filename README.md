@@ -23,7 +23,7 @@
 p.s: Не работает удаление привычек из-за нерабочего метода Delete у api Doubletapp
 ## Примеры использования
 
-[![Example usage](http://i3.ytimg.com/vi/mSNWFp66Gbk/hqdefault.jpg)](https://youtube.com/shorts/OHcaW4uegwg?feature=share "Example usage")
+[![Example usage](https://w7.pngwing.com/pngs/24/227/png-transparent-youtube-logo-youtube-text-trademark-logo-thumbnail.png)](https://youtube.com/shorts/OHcaW4uegwg?feature=share "Example usage")
 <br>
 <a>Нажмите на картинку, чтобы посмотреть видео</a>
 
