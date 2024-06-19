@@ -22,7 +22,8 @@
 - Поиск и фильтрация привычек
 <br>
 p.s: Не работает удаление привычек из-за нерабочего метода Delete у api Doubletapp
-## Примеры использования
+<br>
+## Пример использования
 
 [![Example usage](https://w7.pngwing.com/pngs/24/227/png-transparent-youtube-logo-youtube-text-trademark-logo-thumbnail.png)](https://youtube.com/shorts/OHcaW4uegwg?feature=share "Example usage")
 <br>
